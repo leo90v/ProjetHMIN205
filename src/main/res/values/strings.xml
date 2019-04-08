@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="login_button">Login</string>
+    <string name="signup_button">Sign up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="signup_child_button">Student</string>
+    <string name="signup_parent_button">Parent</string>
+    <string name="signup_teacher_button">Teacher</string>
+    <string name="signup_question">Choose your account type</string>
+</resources>
