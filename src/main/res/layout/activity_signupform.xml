@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signupform_hintSurname"/>
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signupform_hintName"/>
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signupform_hintEmail"/>
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signupform_hintPassword"/>
+    <EditText
+        android:id="@+id/confirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signupform_hintConfirmPassword"/>
+    <EditText
+        android:id="@+id/parentChildLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signupform_hintLink"/>
+    <Spinner
+        android:id="@+id/currentYear"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+    <Spinner
+        android:id="@+id/nbCourses"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <Spinner
+        android:id="@+id/mode"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="223dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:text="@string/signupform_btnSubmit" />
+
+</LinearLayout>

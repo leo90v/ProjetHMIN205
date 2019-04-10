@@ -1,5 +1,6 @@
 package umontpellier.hmin205.jansenmoros;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,24 +19,30 @@ public class Signup extends AppCompatActivity {
         btn_child = (Button) findViewById(R.id.btn_child);
         btn_teacher = (Button) findViewById(R.id.btn_teacher);
 
+        final Intent intent = new Intent(Signup.this, SignupForm.class);
+        final String userType = "userType";
+
         btn_parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Call the intent to change the screen
+                intent.putExtra(userType, 0);
+                startActivity(intent);
             }
         });
 
         btn_child.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Call the intent to change the screen
+                intent.putExtra(userType, 1);
+                startActivity(intent);
             }
         });
 
         btn_teacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Call the intent to change the screen
+                intent.putExtra(userType, 2);
+                startActivity(intent);
             }
         });
     }
