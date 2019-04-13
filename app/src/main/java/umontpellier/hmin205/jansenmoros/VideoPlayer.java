@@ -1,5 +1,6 @@
 package umontpellier.hmin205.jansenmoros;
 
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -9,10 +10,14 @@ import android.widget.VideoView;
 
 public class VideoPlayer extends AppCompatActivity {
 
+    private AppCompatActivity activity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
+
+        activity = this;
 
         VideoView vidView = (VideoView)findViewById(R.id.myVideo);
 
@@ -24,6 +29,14 @@ public class VideoPlayer extends AppCompatActivity {
         vidControl.setAnchorView(vidView);
         vidView.setMediaController(vidControl);
 
+        vidView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                activity.finish();
+            }
+        });
+
         vidView.start();
+        
     }
 }
