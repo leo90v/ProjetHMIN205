@@ -23,7 +23,7 @@ public class Login extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     MaterialEditText email, password;
-    MaterialButton btnLogin, btnSignup;
+    MaterialButton btnLogin, btnSignup, btnVideo;
 
     @Override
     protected void onStop() {
@@ -49,6 +49,7 @@ public class Login extends AppCompatActivity {
         email = (MaterialEditText) findViewById(R.id.email);
         password = (MaterialEditText) findViewById(R.id.password);
         btnSignup = (MaterialButton) findViewById(R.id.signUp_button);
+        btnVideo = (MaterialButton) findViewById(R.id.video_button);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +62,14 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this, Signup.class);
+                startActivity(intent);
+            }
+        });
+
+        btnVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, VideoPlayer.class);
                 startActivity(intent);
             }
         });
