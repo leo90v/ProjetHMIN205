@@ -1,5 +1,6 @@
 package umontpellier.hmin205.jansenmoros;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +23,7 @@ public class Login extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     MaterialEditText email, password;
-    MaterialButton btnLogin;
+    MaterialButton btnLogin, btnSignup;
 
     @Override
     protected void onStop() {
@@ -47,11 +48,20 @@ public class Login extends AppCompatActivity {
         btnLogin = (MaterialButton) findViewById(R.id.login_button);
         email = (MaterialEditText) findViewById(R.id.email);
         password = (MaterialEditText) findViewById(R.id.password);
+        btnSignup = (MaterialButton) findViewById(R.id.signUp_button);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loginUser(email.getText().toString(),password.getText().toString());
+            }
+        });
+
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, Signup.class);
+                startActivity(intent);
             }
         });
     }
