@@ -12,35 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".VideoPlayer" />
+        <activity android:name=".VideoPlayer"
+            android:configChanges="orientation|screenSize"/>
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Signup">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".Signup" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".SignupForm">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".SignupForm" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".WelcomePage">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".WelcomePage" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
