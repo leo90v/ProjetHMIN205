@@ -1,9 +1,13 @@
 package umontpellier.hmin205.jansenmoros;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -25,6 +29,8 @@ public class Login extends AppCompatActivity {
     MaterialEditText email, password;
     MaterialButton btnLogin, btnSignup, btnVideo;
 
+    Dialog myDialog;
+
     @Override
     protected void onStop() {
         compositeDisposable.clear();
@@ -45,6 +51,8 @@ public class Login extends AppCompatActivity {
         Retrofit retrofit = RESTClient.getInstance();
         myAPI = retrofit.create(INodeJS.class);
 
+        myDialog = new Dialog(this);
+
         btnLogin = (MaterialButton) findViewById(R.id.login_button);
         email = (MaterialEditText) findViewById(R.id.email);
         password = (MaterialEditText) findViewById(R.id.password);
@@ -54,7 +62,7 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginUser(email.getText().toString(),password.getText().toString());
+                loginUser(email.getText().toString(),password.getText().toString(), v);
             }
         });
 
@@ -75,18 +83,61 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void loginUser(String mail, String pass) {
-        //Toast.makeText(Login.this, mail + " " + pass, Toast.LENGTH_LONG).show();
-
+    private void loginUser(final String mail, String pass, final View v) {
         compositeDisposable.add(myAPI.loginUser(mail,pass)
         .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Consumer<String>() {
                 @Override
                 public void accept(String s) throws Exception {
-                    //if (s.contains("salt"))
+                    if (s.contains("\"active\":1")) {
+                        Intent intent = new Intent(Login.this, WelcomePage.class);
+                        startActivity(intent);
+                    }
+                    else if (s.contains("Account not active"))
+                        ShowPopup(v, mail);
+                    else
                         Toast.makeText(Login.this, s, Toast.LENGTH_LONG).show();
                 }
             }));
+    }
+
+    public void ShowPopup(View v, final String email) {
+        final TextView txtclose;
+        final EditText etCode;
+        Button btnFollow;
+
+        myDialog.setContentView(R.layout.activity_popup_confirmaccount);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        etCode =(EditText) myDialog.findViewById(R.id.activation_code);
+        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        btnFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compositeDisposable.add(myAPI.validateUser(email,etCode.getText().toString())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                if (s.contains("User validated")) {
+                                    Intent intent = new Intent(Login.this, WelcomePage.class);
+                                    startActivity(intent);
+                                }
+                                else
+                                    Toast.makeText(Login.this, s, Toast.LENGTH_LONG).show();
+                            }
+                        }));
+            }
+        });
+        myDialog.show();
     }
 }
