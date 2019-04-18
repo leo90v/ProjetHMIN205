@@ -4,12 +4,11 @@
     android:layout_height="fill_parent" >
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewWelcome"
         android:layout_marginTop="65dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="@string/welcome_welcome"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
@@ -17,7 +16,7 @@
         android:layout_marginTop="65dp"
         android:layout_width="227dp"
         android:layout_height="117dp"
-        android:layout_below="@id/textView"
+        android:layout_below="@id/textViewWelcome"
         android:layout_centerHorizontal="true"
         android:text="@string/welcome_profile" />
 
