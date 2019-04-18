@@ -7,7 +7,6 @@
     <string name="password">Password</string>
     <string name="signup_child_button">Student</string>
     <string name="signup_parent_button">Parent</string>
-    <string name="signup_teacher_button">Teacher</string>
     <string name="signup_question">Choose your account type</string>
     <string name="signupform_hintName">Name</string>
     <string name="signupform_hintSurname">Surname</string>
@@ -16,6 +15,11 @@
     <string name="signupform_hintConfirmPassword">Confirm password</string>
     <string name="signupform_hintLink">Link</string>
     <string name="signupform_btnSubmit">Submit</string>
+    <string name="signupform_btnAddLink">Add Child</string>
+    <string name="signupform_tvCY">Level</string>
+    <string name="signupform_tvCourses">Courses</string>
+    <string name="signupform_tvMode">Mode</string>
+    <string name="signupform_invalidSignup">Invalid field!</string>
     <string name="popup_confCode">Confirmation code</string>
     <string name="popup_btn_confCode">Activate</string>
     <string name="popup_message">Enter the activation code</string>
@@ -24,4 +28,27 @@
     <string name="welcome_exercises">Exercises</string>
     <string name="welcome_tchat">tChat</string>
     <string name="welcome_welcome">Welcome</string>
+    <string-array name="currentYear_array">
+        <item>Grade 1</item>
+        <item>Grade 2</item>
+        <item>Grade 3</item>
+        <item>Grade 4</item>
+        <item>Grade 5</item>
+        <item>Grade 6</item>
+        <item>Grade 7</item>
+        <item>Grade 8</item>
+        <item>Grade 9</item>
+        <item>Grade 10</item>
+        <item>Grade 11</item>
+        <item>Grade 12</item>
+    </string-array>
+    <string-array name="nbCourses_array">
+        <item>One</item>
+        <item>Two</item>
+        <item>All</item>
+    </string-array>
+    <string-array name="mode_array">
+        <item>Progression</item>
+        <item>Accompanied</item>
+    </string-array>
 </resources>
