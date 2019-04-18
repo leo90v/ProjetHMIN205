@@ -17,7 +17,6 @@ public class Signup extends AppCompatActivity {
 
         btn_parent = (Button) findViewById(R.id.btn_parent);
         btn_child = (Button) findViewById(R.id.btn_child);
-        btn_teacher = (Button) findViewById(R.id.btn_teacher);
 
         final Intent intent = new Intent(Signup.this, SignupForm.class);
         final String userType = "userType";
@@ -34,14 +33,6 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intent.putExtra(userType, 2);
-                startActivity(intent);
-            }
-        });
-
-        btn_teacher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent.putExtra(userType, 3);
                 startActivity(intent);
             }
         });

@@ -2,8 +2,12 @@ package umontpellier.hmin205.jansenmoros;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.rengwuxian.materialedittext.MaterialEditText;
+
+import org.w3c.dom.Text;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -84,13 +90,16 @@ public class Login extends AppCompatActivity {
     }
 
     private void loginUser(final String mail, String pass, final View v) {
-        compositeDisposable.add(myAPI.loginUser(mail,pass)
+        // TODO : Uncomment to use the server
+        /*compositeDisposable.add(myAPI.loginUser(mail,pass)
         .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Consumer<String>() {
                 @Override
                 public void accept(String s) throws Exception {
                     if (s.contains("\"active\":1")) {
+                        // Change the mail to the username
+                        Properties.getInstance().setLogin(true, mail);
                         Intent intent = new Intent(Login.this, WelcomePage.class);
                         startActivity(intent);
                     }
@@ -99,7 +108,12 @@ public class Login extends AppCompatActivity {
                     else
                         Toast.makeText(Login.this, s, Toast.LENGTH_LONG).show();
                 }
-            }));
+            }));*/
+        // TODO : Comment to use the server
+        // Change the mail to the username
+        Properties.getInstance().setLogin(true, mail);
+        Intent intent = new Intent(Login.this, WelcomePage.class);
+        startActivity(intent);
     }
 
     public void ShowPopup(View v, final String email) {

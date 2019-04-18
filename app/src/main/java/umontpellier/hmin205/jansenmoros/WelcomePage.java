@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class WelcomePage extends AppCompatActivity {
 
@@ -15,6 +16,11 @@ public class WelcomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcomepage);
+
+        // Set the text
+        TextView tv = findViewById(R.id.textViewWelcome);
+        String username = Properties.getInstance().getUsername();
+        tv.setText(getString(R.string.welcome_welcome) + " " + username);
     }
 
     @Override
