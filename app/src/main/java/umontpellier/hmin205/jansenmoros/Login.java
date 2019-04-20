@@ -26,6 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.INodeJS;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
+import umontpellier.hmin205.jansenmoros.POJO.User;
 
 public class Login extends AppCompatActivity {
 
@@ -100,29 +101,30 @@ public class Login extends AppCompatActivity {
 
     private void loginUser(final String mail, String pass, final View v) {
         // TODO : Uncomment to use the server
-        /*compositeDisposable.add(myAPI.loginUser(mail,pass)
-        .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Consumer<String>() {
-                @Override
-                public void accept(String s) throws Exception {
-                    if (s.contains("\"active\":1")) {
-                        // Change the mail to the username
-                        Properties.getInstance().setLogin(true, mail);
-                        Intent intent = new Intent(Login.this, WelcomePage.class);
-                        startActivity(intent);
+        compositeDisposable.add(myAPI.loginUser(mail,pass)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<User>() {
+                    @Override
+                    public void accept(User user) throws Exception {
+                        if (user.getId() > 0) {
+                            if (user.getActive() == 1) {
+                                // Change the mail to the username
+                                Properties.getInstance().setLogin(true, mail);
+                                Intent intent = new Intent(Login.this, WelcomePage.class);
+                                startActivity(intent);
+                            } else if (user.getActive() == 0)
+                                ShowPopup(v, mail);
+                        }
+                        else
+                            Toast.makeText(Login.this, user.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                    else if (s.contains("Account not active"))
-                        ShowPopup(v, mail);
-                    else
-                        Toast.makeText(Login.this, s, Toast.LENGTH_LONG).show();
-                }
-            }));*/
+                }));
         // TODO : Comment to use the server
         // Change the mail to the username
-        Properties.getInstance().setLogin(true, mail);
+        /*Properties.getInstance().setLogin(true, mail);
         Intent intent = new Intent(Login.this, WelcomePage.class);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     public void ShowPopup(View v, final String email) {
