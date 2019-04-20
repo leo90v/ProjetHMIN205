@@ -26,6 +26,9 @@ public class User {
     @SerializedName("user_type")
     @Expose
     private Integer userType;
+    @SerializedName("grade")
+    @Expose
+    private Integer grade;
     @SerializedName("active")
     @Expose
     private Integer active;
@@ -103,6 +106,14 @@ public class User {
 
     public void setActive(String message) {
         this.message = message;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 
 }
