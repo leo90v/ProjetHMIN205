@@ -42,4 +42,7 @@ dependencies {
 
     //Material Button
     implementation 'com.github.material-components:material-components-android:1.0.0'
+
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    //implementation 'org.apache.commons:commons-io:2.6'
 }
