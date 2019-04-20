@@ -3,6 +3,7 @@ package umontpellier.hmin205.jansenmoros;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -86,6 +87,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this, VideoPlayer.class);
+                intent.putExtra(VideoPlayer.VIDEO_URL,"https://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4");
                 startActivity(intent);
             }
         });
@@ -94,6 +96,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this, PdfReader.class);
+                intent.putExtra(PdfReader.PDF_URL,"https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-00sc-introduction-to-computer-science-and-programming-spring-2011/unit-1/lecture-1-introduction-to-6.00/MIT6_00SCS11_lec01_slides.pdf");
                 startActivity(intent);
             }
         });

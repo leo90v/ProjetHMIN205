@@ -6,10 +6,12 @@ public class Properties {
 
     private boolean isLoggedIn;
     private String username;
+    private String baseUrl;
 
     protected Properties(){
         this.isLoggedIn = false;
         this.username = "";
+        this.baseUrl = "http://10.0.2.2:8888/";
     }
 
     public static synchronized Properties getInstance() {
@@ -19,7 +21,7 @@ public class Properties {
         return mInstance;
     }
 
-    public void setLogin(boolean isLoggedIn, String username){
+    public synchronized void setLogin(boolean isLoggedIn, String username){
         this.isLoggedIn = isLoggedIn;
         this.username = username;
     }
@@ -27,4 +29,6 @@ public class Properties {
     public String getUsername(){return this.username;}
 
     public boolean isLoggedIn(){return this.isLoggedIn;}
+
+    public String getBaseUrl() {return this.baseUrl;}
 }

@@ -16,13 +16,14 @@ public class PdfReader extends AppCompatActivity {
 
     PDFView pdfView;
 
+    public static final String PDF_URL = "pdf_url";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdf_reader);
 
-        String pdfAddress = "https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-00sc-introduction-to-computer-science-and-programming-spring-2011/unit-1/lecture-1-introduction-to-6.00/MIT6_00SCS11_lec01_slides.pdf";
-        //String pdfAddress = "http://10.0.2.2:8888/pdf/MIT6_00SCS11_lec01_slides.pdf";
+        String pdfAddress = getIntent().getStringExtra(PDF_URL);
 
         pdfView = findViewById(R.id.pdfView);
 

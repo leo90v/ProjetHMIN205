@@ -1,5 +1,6 @@
 package umontpellier.hmin205.jansenmoros;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,8 @@ public class VideoPlayer extends AppCompatActivity {
     private AppCompatActivity activity;
     private VideoView vidView;
 
+    public static final String VIDEO_URL = "video_url";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +26,7 @@ public class VideoPlayer extends AppCompatActivity {
         activity = this;
 
         vidView = (VideoView)findViewById(R.id.myVideo);
-        String vidAddress = "https://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
-        //String vidAddress = "http://10.0.2.2:8888/video/MIT6_00SCS11_lec01_300k.mp4";
+        String vidAddress = getIntent().getStringExtra(VIDEO_URL);
 
         Uri vidUri = Uri.parse(vidAddress);
         vidView.setVideoURI(vidUri);

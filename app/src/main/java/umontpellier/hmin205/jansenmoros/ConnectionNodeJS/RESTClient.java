@@ -4,6 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import umontpellier.hmin205.jansenmoros.Properties;
 
 public class RESTClient {
     private static Retrofit instance;
@@ -11,7 +12,7 @@ public class RESTClient {
     public static Retrofit getInstance() {
         if (instance == null)
             instance = new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2:8888/")
+                    .baseUrl(Properties.getInstance().getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
