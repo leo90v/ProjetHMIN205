@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -26,6 +27,8 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.INodeJS;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
+import umontpellier.hmin205.jansenmoros.POJO.Parent;
+import umontpellier.hmin205.jansenmoros.POJO.User;
 
 public class SignupForm extends AppCompatActivity {
     Dialog myDialog;
@@ -190,6 +193,40 @@ public class SignupForm extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (accountType == 2) {
+                    Parent parent = new Parent();
+                    User user1 = new User();
+                    User user2 = new User();
+
+                    parent.setName("Jane");
+                    parent.setLastName("Doe");
+                    parent.setEmail("jane@gmail.com");
+                    parent.setPassword("123456");
+                    parent.setUserType(2);
+
+                    user1.setName("Little John");
+                    user1.setLastName("Doe");
+                    user1.setEmail("little_john@gmail.com");
+                    user1.setPassword("123456");
+                    user1.setUserType(1);
+                    user1.setGrade(4);
+
+                    user2.setName("Little Jane");
+                    user2.setLastName("Doe");
+                    user2.setEmail("little_jane@gmail.com");
+                    user2.setPassword("123456");
+                    user2.setUserType(1);
+                    user2.setGrade(4);
+
+                    List<User> kids = new ArrayList<User>();
+                    kids.add(user1);
+                    kids.add(user2);
+
+                    parent.setUsers(kids);
+
+                    signupParent(parent);
+                }
+                else
                 if(isEmail && isName && isSurname){
                     //Save user in DB
                     signupUser(etEmail.getText().toString(),etPassword.getText().toString(),etName.getText().toString(),etSurname.getText().toString(),accountType);
@@ -272,6 +309,18 @@ public class SignupForm extends AppCompatActivity {
                             Toast.makeText(SignupForm.this, "User already exists!", Toast.LENGTH_LONG).show();
                         else
                             Toast.makeText(SignupForm.this, s, Toast.LENGTH_LONG).show();
+                    }
+                }));
+    }
+
+    private void signupParent(Parent parent) {
+        compositeDisposable.add(myAPI.signupParent(parent)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Parent>() {
+                    @Override
+                    public void accept(Parent parent) throws Exception {
+                        Toast.makeText(SignupForm.this, "It doesn't crash, YAY!", Toast.LENGTH_LONG).show();
                     }
                 }));
     }
