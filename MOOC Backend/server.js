@@ -133,15 +133,12 @@ app.post('/login/', (req, res, next) => {
       var encrypted_password = result[0].password;
       var hashed_password = checkHashPassword(user_password,salt).passwordHash;
       if (encrypted_password == hashed_password)
-        if (result[0].active == 0)
-          res.end(JSON.stringify('Account not active'));
-        else
-          res.end(JSON.stringify(result[0]));
+        res.end(JSON.stringify(result[0]));
       else
-        res.end(JSON.stringify('Wrong password'));
+        res.end(JSON.stringify({id:-1,message:'Wrong user or password'}));
     }
     else {
-      res.end(JSON.stringify('User does not exist'));
+      res.end(JSON.stringify({id:-1,message:'Wrong user or password'}));
     }
   })
 });
@@ -182,7 +179,7 @@ app.post('/validate/', (req, res, next) => {
 //Stream video
 app.get('/video/:video', function(req, res) {
   let video = req.params.video
-  const path = '/home/leonardo/Videos/' + video
+  const path = './videos/' + video
 
   var stat = fs.statSync(path);
   var total = stat.size;
@@ -205,6 +202,76 @@ app.get('/video/:video', function(req, res) {
     res.writeHead(200, { 'Content-Length': total, 'Content-Type': 'video/mp4' });
     fs.createReadStream(path).pipe(res);
   }
+})
+
+//Send pdf
+app.get('/pdf/:file', function(req, res) {
+  let pdf = req.params.file
+  const path = './pdfs/' + pdf
+  /*fs.readFile(path, function (err,data){
+     res.contentType("application/pdf");
+     res.send(data);
+  });*/
+  var file = fs.createReadStream(path);
+  var stat = fs.statSync(path);
+  res.setHeader('Content-Length', stat.size);
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader('Content-Disposition', 'attachment; filename='+pdf);
+  file.pipe(res);
+})
+
+//Get courses
+app.get('/course/:grade', function(req, res) {
+  let grade = req.params.grade
+  con.query('SELECT * FROM course WHERE grade=?', [grade], function(error, result, fields) {
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      res.end(JSON.stringify(result))
+    }
+    else {
+      res.end(JSON.stringify('Invalid grade'));
+    }
+  })
+})
+
+//Get videos
+app.get('/video/list/:course', function(req, res) {
+  let course = req.params.course
+  con.query('SELECT * FROM video WHERE id_course=?', [course], function(error, result, fields) {
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      res.end(JSON.stringify(result))
+    }
+    else {
+      res.end(JSON.stringify('Invalid course'));
+    }
+  })
+})
+
+//Get pdfs
+app.get('/pdf/list/:course', function(req, res) {
+  let course = req.params.course
+  con.query('SELECT * FROM pdf WHERE id_course=?', [course], function(error, result, fields) {
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      res.end(JSON.stringify(result))
+    }
+    else {
+      res.end(JSON.stringify('Invalid course'));
+    }
+  })
 })
 
 //Send email
