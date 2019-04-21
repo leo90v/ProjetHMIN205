@@ -16,6 +16,7 @@
     <string name="signupform_hintLink">Link</string>
     <string name="signupform_btnSubmit">Submit</string>
     <string name="signupform_btnAddLink">Add Child</string>
+    <string name="signupform_btnRemoveLink">Remove Child</string>
     <string name="signupform_tvCY">Level</string>
     <string name="signupform_tvCourses">Courses</string>
     <string name="signupform_tvMode">Mode</string>
