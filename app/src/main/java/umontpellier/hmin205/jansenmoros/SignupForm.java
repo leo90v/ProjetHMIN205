@@ -1,6 +1,5 @@
 package umontpellier.hmin205.jansenmoros;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,13 +10,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +39,7 @@ public class SignupForm extends AppCompatActivity {
     EditText etName, etSurname, etEmail, etPassword, etConfirmPass;
     Button btn_submit, btn_addLink, btn_removeLink;
     boolean isName, isEmail, isSurname;
+    ArrayList<View> childViewList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +90,10 @@ public class SignupForm extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // Remove the last child
-                    layout.removeViewAt(layout.getChildCount()-2);
+                    if (!childViewList.isEmpty()) {
+                        layout.removeView(childViewList.get(childViewList.size() - 1));
+                        childViewList.remove(childViewList.size() - 1);
+                    }
                 }
             });
         }
@@ -199,7 +199,12 @@ public class SignupForm extends AppCompatActivity {
 
                     parent.setUsers(kids);
 
-                    signupParent(parent);
+                    //signupParent(parent);
+                    String names = "";
+                    for (View view : childViewList) {
+                        names += ((EditText)view.findViewById(R.id.childName)).getText().toString() + " ";
+                    }
+                    Toast.makeText(SignupForm.this,names,Toast.LENGTH_LONG).show();
                 }
                 else
                 if(isEmail && isName && isSurname){
@@ -321,6 +326,7 @@ public class SignupForm extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.nestedlayout_childfield, null);
         layout.addView(rowView, layout.getChildCount() - 1);
+        childViewList.add(rowView);
 
         Spinner spCurrentYear, spNbCourses, spMode;
 

@@ -17,6 +17,7 @@ create table user(
 	user_type integer,
     grade integer DEFAULT 0,
 	active integer DEFAULT 0,
+    id_parent integer DEFAULT 0,
 	primary key(id)
 );
 
@@ -51,7 +52,8 @@ create table pdf(
 );
 
 #INSERTS
-insert into user values (1,'John','Doe','john@gmail.com','02ca39431c68cc2edf6d1068fa73d6225307caf5155b2df293505de8894559d9e0669db982dae673f30e79ef63a16180e93d86ecf578ae3edc13e3d7e33a7a89','22ca24db59b3f5b8',1,4,1);
+insert into user values (1,'Jane','Doe','jane@gmail.com','02ca39431c68cc2edf6d1068fa73d6225307caf5155b2df293505de8894559d9e0669db982dae673f30e79ef63a16180e93d86ecf578ae3edc13e3d7e33a7a89','22ca24db59b3f5b8',2,0,1,0);
+insert into user values (2,'John','Doe','john@gmail.com','02ca39431c68cc2edf6d1068fa73d6225307caf5155b2df293505de8894559d9e0669db982dae673f30e79ef63a16180e93d86ecf578ae3edc13e3d7e33a7a89','22ca24db59b3f5b8',1,4,1,1);
 
 insert into course values (1, '4', 'Introduction to computer science and programming');
 insert into course values (2, '4', 'Artificial Intelligence');
