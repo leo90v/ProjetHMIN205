@@ -1,5 +1,6 @@
 package umontpellier.hmin205.jansenmoros;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,11 +9,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,20 +40,15 @@ public class SignupForm extends AppCompatActivity {
     INodeJS myAPI;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    EditText etName, etSurname, etEmail, etPassword, etConfirmPass, etLink;
-    Spinner spCurrentYear, spNbCourses, spMode;
-    Button btn_submit, btn_addLink;
+    EditText etName, etSurname, etEmail, etPassword, etConfirmPass;
+    Button btn_submit, btn_addLink, btn_removeLink;
     boolean isName, isEmail, isSurname;
-
-    int nbChildren;
-
-    ArrayList<EditText> childLinks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signupform);
-        final RelativeLayout layout = (RelativeLayout) findViewById(R.id.signUpLinearLayout);
+        final LinearLayout layout = (LinearLayout) findViewById(R.id.signUpLinearLayout);
 
         Retrofit retrofit = RESTClient.getInstance();
         myAPI = retrofit.create(INodeJS.class);
@@ -68,59 +68,34 @@ public class SignupForm extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.email);
         etPassword = (EditText) findViewById(R.id.password);
         etConfirmPass = (EditText) findViewById(R.id.confirmPassword);
-        etLink = (EditText) findViewById(R.id.parentChildLink);
-        spCurrentYear = (Spinner) findViewById(R.id.currentYear);
-        spNbCourses = (Spinner) findViewById(R.id.nbCourses);
-        spMode = (Spinner) findViewById(R.id.mode);
         btn_submit = (Button) findViewById(R.id.btn_submit);
         btn_addLink = (Button) findViewById(R.id.btn_addLink);
+        btn_removeLink = (Button) findViewById(R.id.btn_removeLink);
 
-        // Set the spinners
-        ArrayAdapter<CharSequence> cyAdapter = ArrayAdapter.createFromResource(SignupForm.this,
-                R.array.currentYear_array, android.R.layout.simple_spinner_item);
-        cyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spCurrentYear.setAdapter(cyAdapter);
-
-        ArrayAdapter<CharSequence> nbCoursesAdapter = ArrayAdapter.createFromResource(SignupForm.this,
-                R.array.nbCourses_array, android.R.layout.simple_spinner_item);
-        nbCoursesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spNbCourses.setAdapter(nbCoursesAdapter);
-
-        ArrayAdapter<CharSequence> modeAdapter = ArrayAdapter.createFromResource(SignupForm.this,
-                R.array.mode_array, android.R.layout.simple_spinner_item);
-        modeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spMode.setAdapter(modeAdapter);
-
-        // Hide the field for the parent's link if it's the child's account
+        // Hide the add child field if it's the child's account
         if(accountType==1){
-            etLink.setVisibility(View.GONE);
             btn_addLink.setVisibility(View.GONE);
+            btn_removeLink.setVisibility(View.GONE);
         }
         // A parent account
         else{
-            childLinks = new ArrayList<>();
-            childLinks.add(etLink);
-            nbChildren=1;
+            // A single child by default
+            addChild(layout);
 
             btn_addLink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EditText etNewLink = new EditText(SignupForm.this);
-
-                    RelativeLayout.LayoutParams etParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    etParams.addRule(RelativeLayout.BELOW, childLinks.get(childLinks.size()-1).getId());
-                    etNewLink.setLayoutParams(etParams);
-                    etNewLink.setHint(R.string.signupform_hintLink);
-                    nbChildren++;
-                    etNewLink.setId(nbChildren);
-
-                    layout.addView(etNewLink);
-
-                    childLinks.add(etNewLink);
+                    addChild(layout);
                 }
             });
 
-
+            btn_removeLink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Remove the last child
+                    layout.removeViewAt(layout.getChildCount()-2);
+                }
+            });
         }
 
         // Check if it's a valid field
@@ -340,6 +315,34 @@ public class SignupForm extends AppCompatActivity {
             if(target.toString().matches("[a-zA-Z ]+")) return true;
             else return false;
         }
+    }
+
+    public void addChild(LinearLayout layout){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.nestedlayout_childfield, null);
+        layout.addView(rowView, layout.getChildCount() - 1);
+
+        Spinner spCurrentYear, spNbCourses, spMode;
+
+        spCurrentYear = (Spinner) rowView.findViewById(R.id.currentYear);
+        spNbCourses = (Spinner) rowView.findViewById(R.id.nbCourses);
+        spMode = (Spinner) rowView.findViewById(R.id.mode);
+
+        // Set the spinners
+        ArrayAdapter<CharSequence> cyAdapter = ArrayAdapter.createFromResource(SignupForm.this,
+                R.array.currentYear_array, android.R.layout.simple_spinner_item);
+        cyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spCurrentYear.setAdapter(cyAdapter);
+
+        ArrayAdapter<CharSequence> nbCoursesAdapter = ArrayAdapter.createFromResource(SignupForm.this,
+                R.array.nbCourses_array, android.R.layout.simple_spinner_item);
+        nbCoursesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spNbCourses.setAdapter(nbCoursesAdapter);
+
+        ArrayAdapter<CharSequence> modeAdapter = ArrayAdapter.createFromResource(SignupForm.this,
+                R.array.mode_array, android.R.layout.simple_spinner_item);
+        modeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spMode.setAdapter(modeAdapter);
     }
 
 }
