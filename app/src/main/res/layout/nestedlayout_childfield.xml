@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/childLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="300dp"
+    android:layout_below="@+id/btn_addLink"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/childName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signupform_hintName"/>
+
+    <EditText
+        android:id="@+id/childPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/childName"
+        android:hint="@string/signupform_hintPassword"/>
+    <EditText
+        android:id="@+id/childConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/childPassword"
+        android:hint="@string/signupform_hintConfirmPassword"/>
+
+    <TextView
+        android:id="@+id/textViewCY"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:paddingTop="15dp"
+        android:paddingLeft="10dp"
+        android:text="@string/signupform_tvCY"
+        android:layout_below="@+id/childConfirmPassword"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <Spinner
+        android:id="@+id/currentYear"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/childConfirmPassword"
+        android:layout_toRightOf="@+id/textViewCY"/>
+
+    <TextView
+        android:id="@+id/textViewNbCourses"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:paddingTop="15dp"
+        android:paddingLeft="10dp"
+        android:text="@string/signupform_tvCourses"
+        android:layout_below="@+id/textViewCY"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <Spinner
+        android:id="@+id/nbCourses"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/currentYear"
+        android:layout_toRightOf="@+id/textViewNbCourses"/>
+
+    <TextView
+        android:id="@+id/textViewMode"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:paddingTop="15dp"
+        android:paddingLeft="10dp"
+        android:text="@string/signupform_tvMode"
+        android:layout_below="@+id/textViewNbCourses"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <Spinner
+        android:id="@+id/mode"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/nbCourses"
+        android:layout_toRightOf="@+id/textViewMode"/>
+
+</RelativeLayout>

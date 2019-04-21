@@ -1,108 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:id="@+id/signUpLinearLayout">
+    android:fillViewport="true"
+    android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/surname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/signupform_hintSurname"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:id="@+id/signUpLinearLayout">
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/surname"
-        android:hint="@string/signupform_hintName"/>
+        <EditText
+            android:id="@+id/surname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/signupform_hintSurname"/>
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
-        android:hint="@string/signupform_hintEmail"/>
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/email"
-        android:hint="@string/signupform_hintPassword"/>
-    <EditText
-        android:id="@+id/confirmPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/password"
-        android:hint="@string/signupform_hintConfirmPassword"/>
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/signupform_hintName"/>
 
-    <TextView
-        android:id="@+id/textViewCY"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:paddingTop="15dp"
-        android:paddingLeft="10dp"
-        android:text="@string/signupform_tvCY"
-        android:layout_below="@+id/confirmPassword"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    <Spinner
-        android:id="@+id/currentYear"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/confirmPassword"
-        android:layout_toRightOf="@+id/textViewCY"/>
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/signupform_hintEmail"/>
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/signupform_hintPassword"/>
+        <EditText
+            android:id="@+id/confirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/signupform_hintConfirmPassword"/>
 
-    <TextView
-        android:id="@+id/textViewNbCourses"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:paddingTop="15dp"
-        android:paddingLeft="10dp"
-        android:text="@string/signupform_tvCourses"
-        android:layout_below="@+id/textViewCY"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    <Spinner
-        android:id="@+id/nbCourses"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/currentYear"
-        android:layout_toRightOf="@+id/textViewNbCourses"/>
+        <Button
+            android:id="@+id/btn_addLink"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:text="@string/signupform_btnAddLink" />
 
-    <TextView
-        android:id="@+id/textViewMode"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:paddingTop="15dp"
-        android:paddingLeft="10dp"
-        android:text="@string/signupform_tvMode"
-        android:layout_below="@+id/textViewNbCourses"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    <Spinner
-        android:id="@+id/mode"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/nbCourses"
-        android:layout_toRightOf="@+id/textViewMode"/>
+        <Button
+            android:id="@+id/btn_removeLink"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:text="@string/signupform_btnRemoveLink" />
 
-    <Button
-        android:id="@+id/btn_addLink"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/mode"
-        android:text="@string/signupform_btnAddLink" />
-    <EditText
-        android:id="@+id/parentChildLink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_addLink"
-        android:hint="@string/signupform_hintLink"/>
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="223dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:text="@string/signupform_btnSubmit" />
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="223dp"
+            android:layout_height="60dp"
+            android:text="@string/signupform_btnSubmit" />
 
-</RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>
