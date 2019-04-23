@@ -7,7 +7,6 @@ var fs = require('fs');
 var path = require('path');
 nodeMailer = require('nodemailer');
 
-
 //Database connection
 var con = mysql.createConnection({
   host: 'localhost',
@@ -67,6 +66,7 @@ function sendEmail(email, short_id, res) {
 
   transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
+        console.log(error)
         res.end(JSON.stringify('Signup failed!'))
       }
       res.end(JSON.stringify('Signup succesful!'))
@@ -80,7 +80,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 //Sign Up
-app.post('/signup/', (req, res, next) => {
+app.post('/signup/student', (req, res, next) => {
   var post_data = req.body;
   var plaint_password = post_data.password;
   var hash_data = saltHashPassword(plaint_password);
@@ -116,6 +116,131 @@ app.post('/signup/', (req, res, next) => {
   });
 });
 
+//hello darkness my old friend
+//signup parent
+app.post('/signup/parent', (req, res, next) => {
+  var parent = req.body;
+  var emails = new Array();
+  emails.push(parent.email)
+
+  //for each student
+  parent['users'].forEach(function(student) {
+    emails.push(student.email);
+  });
+
+  con.query("SELECT * FROM user WHERE email IN (?)",[emails],function(err, result, fields) {
+    con.on('error',function(error) {
+      console.log('[MySQL ERROR]', error);
+    });
+
+    if (result && result.length) {
+      var existingEmails = new Array()
+      result.forEach(function(user) {
+        existingEmails.push(user.email);
+      });
+      res.end(JSON.stringify('User(s) already exist(s) : ' + existingEmails.join()))
+    }
+    else {
+      //fun begins here
+      var children = parent.users;
+      delete parent.users;
+      var n_childs = children.length;
+
+      var plaint_password = parent.password;
+      var hash_data = saltHashPassword(plaint_password);
+      var password = hash_data.passwordHash;
+      var salt = hash_data.salt;
+
+      con.beginTransaction(function (err) {
+        //insert parent
+        con.query("INSERT INTO user (name, last_name, email, password, salt, user_type) VALUES (?,?,?,?,?,?)", [parent.name, parent.last_name, parent.email, password, salt, parent.user_type], function(err, result, fields) {
+          con.on('error',function(err) {
+            console.log('[MySQL ERROR]', err);
+            if (err) {
+              con.rollback(function() {
+                throw err;
+              });
+            }
+          });
+          //save parent id
+          parent.id = result.insertId
+          //insert parent user validation
+          let short_id = shortid.generate();
+          con.query("INSERT INTO user_validation (email, short_id) VALUES (?,?)", [parent.email, short_id], function(err, result, fields) {
+            con.on('error',function(err) {
+              console.log('[MySQL ERROR]', err);
+              if (err) {
+                con.rollback(function() {
+                  throw err;
+                });
+              }
+            });
+
+            var inserted_children = 0;
+            //Parent registred succesfully now let's register the kids
+            children.forEach(function(child) {
+              var hash_data = saltHashPassword(child.password);
+              child.password = hash_data.passwordHash;
+              child.salt = hash_data.salt;
+
+              con.query("INSERT INTO user (name, last_name, email, password, salt, user_type, grade, id_parent) VALUES (?,?,?,?,?,?,?,?)", [child.name, child.last_name, child.email, child.password, child.salt, child.user_type, child.grade, parent.id], function(err, result, fields) {
+                con.on('error',function(err) {
+                  console.log('[MySQL ERROR]', err);
+                  if (err) {
+                    con.rollback(function() {
+                      throw err;
+                    });
+                  }
+                });
+                inserted_children++;
+                if (inserted_children == n_childs) {
+                  con.commit(function(err) {
+                    if (err) {
+                      con.rollback(function() {
+                        throw err;
+                      });
+                    }
+                    //Send email to parent
+                    let transporter = nodeMailer.createTransport({
+                      host: 'smtp.gmail.com',
+                      port: 465,
+                      secure: true,
+                      auth: {
+                          user: 'moochmin205@gmail.com',
+                          pass: 'bonjouratous'
+                      }
+                    });
+
+                    let text = 'Please use this code ' + short_id + ' to validate your account.'
+                    let html = 'Please use this code <b>' + short_id + '</b> to validate your account.'
+
+                    let mailOptions = {
+                        from: '"Mooc HMIN205" <moochmin205@gmail.com>', // sender address
+                        to: parent.email, // list of receivers
+                        subject: 'Welcome to MOOC HMIN205', // Subject line
+                        text: text, // plain text body
+                        html: html // html body
+                    };
+
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                          console.log(error)
+                          res.end(JSON.stringify('Signup failed!'))
+                        }
+                        res.end(JSON.stringify('Signup succesful!'))
+                        console.log('Message %s sent: %s', info.messageId, info.response);
+                    });
+                  });
+                }
+              });
+            });
+          });
+        });
+      })
+    }
+  });
+});
+
 //Login
 app.post('/login/', (req, res, next) => {
   var post_data = req.body;
@@ -144,33 +269,75 @@ app.post('/login/', (req, res, next) => {
 });
 
 //Validate user
+//Child accounts are activates once the parent account is activated
 app.post('/validate/', (req, res, next) => {
   var post_data = req.body;
   var short_id = post_data.short_id;
   var email = post_data.email;
 
-  con.query('SELECT * FROM user_validation WHERE email=? AND short_id=?', [email,short_id], function(error, result, fields) {
+  con.query('SELECT v.*, u.user_type, u.id AS user_id FROM user_validation v, user u WHERE v.email=? AND v.short_id=? AND v.email = u.email', [email,short_id], function(error, result, fields) {
     con.on('error', function(err) {
       console.log('[MySQL ERROR]', err);
       res.json('Error: ', err);
     })
 
     if (result && result.length) {
-      con.query('DELETE FROM user_validation WHERE email=? AND short_id=?', [email,short_id], function(error, result, fields) {
-        con.on('error', function(err) {
-          console.log('[MySQL ERROR]', err);
-          res.json('Error: ', err);
-        })
-        con.query('UPDATE user SET active=1 WHERE email=?', [email], function(error, result, fields) {
+      var user_id = result[0].user_id;
+      var user_type = result[0].user_type;
+      con.beginTransaction(function (err) {
+        con.query('DELETE FROM user_validation WHERE email=? AND short_id=?', [email,short_id], function(error, result, fields) {
           con.on('error', function(err) {
             console.log('[MySQL ERROR]', err);
-            res.json('Error: ', err);
+            if (err) {
+              con.rollback(function() {
+                throw err;
+              });
+            }
           })
-          res.end(JSON.stringify('User validated'));
+          con.query('UPDATE user SET active=1 WHERE email=?', [email], function(error, result, fields) {
+            con.on('error', function(err) {
+              console.log('[MySQL ERROR]', err);
+              if (err) {
+                con.rollback(function() {
+                  throw err;
+                });
+              }
+            })
+            if (user_type == 1) {
+              con.commit(function(err) {
+                if (err) {
+                  con.rollback(function() {
+                    throw err;
+                  });
+                }
+                res.end(JSON.stringify('User validated'));
+              });
+            }
+            else { //Activate child accounts
+              con.query('UPDATE user SET active=1 WHERE id_parent=?', [user_id], function(error, result, fields) {
+                con.on('error', function(err) {
+                  console.log('[MySQL ERROR]', err);
+                  if (err) {
+                    con.rollback(function() {
+                      throw err;
+                    });
+                  }
+                })
+                con.commit(function(err) {
+                  if (err) {
+                    con.rollback(function() {
+                      throw err;
+                    });
+                  }
+                  res.end(JSON.stringify('User validated'));
+                });
+              });
+            }
+          })
         })
-      })
+      });
     }
-    else {
+    else { //c-c-c-combo breaker
       res.end(JSON.stringify('Wrong validation code'));
     }
   })

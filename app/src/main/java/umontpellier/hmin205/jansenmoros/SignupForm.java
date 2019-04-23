@@ -168,9 +168,31 @@ public class SignupForm extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Parent signup
+                //TODO Finish validations
                 if (accountType == 2) {
+                    //Recover all data and build POJO object for REST Endpoint
                     Parent parent = new Parent();
-                    User user1 = new User();
+                    parent.setName(etName.getText().toString());
+                    parent.setLastName(etSurname.getText().toString());
+                    parent.setEmail(etEmail.getText().toString());
+                    parent.setPassword(etPassword.getText().toString());
+                    parent.setUserType(accountType);
+                    parent.setUsers(new ArrayList<User>());
+
+                    for (View view : childViewList) {
+                        User kid = new User();
+                        kid.setGrade(((Spinner)view.findViewById(R.id.currentYear)).getSelectedItemPosition()+1);
+                        kid.setName(((EditText) view.findViewById(R.id.childName)).getText().toString());
+                        kid.setLastName(((EditText) view.findViewById(R.id.childLastName)).getText().toString());
+                        kid.setPassword(((EditText) view.findViewById(R.id.childPassword)).getText().toString());
+                        kid.setEmail(((EditText) view.findViewById(R.id.childEmail)).getText().toString());
+                        kid.setUserType(1);
+                        parent.getUsers().add(kid);
+                    }
+
+                    //Hardcoded parent for testing
+                    /*User user1 = new User();
                     User user2 = new User();
 
                     parent.setName("Jane");
@@ -193,29 +215,24 @@ public class SignupForm extends AppCompatActivity {
                     user2.setUserType(1);
                     user2.setGrade(4);
 
-                    List<User> kids = new ArrayList<User>();
+                    ArrayList<User> kids = new ArrayList<>();
                     kids.add(user1);
                     kids.add(user2);
 
-                    parent.setUsers(kids);
+                    parent.setUsers(kids);*/
 
-                    //signupParent(parent);
-                    String names = "";
-                    for (View view : childViewList) {
-                        names += ((EditText)view.findViewById(R.id.childName)).getText().toString() + " ";
-                    }
-                    Toast.makeText(SignupForm.this,names,Toast.LENGTH_LONG).show();
-                }
-                else
-                if(isEmail && isName && isSurname){
-                    //Save user in DB
-                    signupUser(etEmail.getText().toString(),etPassword.getText().toString(),etName.getText().toString(),etSurname.getText().toString(),accountType);
+                    signupParent(parent);
+                } else { //Student signup
+                    //TODO Finish validations
+                    if (isEmail && isName && isSurname) {
+                        //Save user in DB
+                        signupUser(etEmail.getText().toString(), etPassword.getText().toString(), etName.getText().toString(), etSurname.getText().toString(), accountType);
 
-                    // TODO : Save the user as an object in the next page
-                    //Comment previous line and uncomment next line if you need to test the popup without the DB stuff
-                    //ShowPopup(v);
+                        // TODO : Save the user as an object in the next page
+                        //Comment previous line and uncomment next line if you need to test the popup without the DB stuff
+                        //ShowPopup(v);
 
-                    // May interfere with the backend toasts
+                        // May interfere with the backend toasts
                     /*Context context = getApplicationContext();
                     CharSequence text = "Signing up!";
                     int duration = Toast.LENGTH_LONG;
@@ -223,17 +240,17 @@ public class SignupForm extends AppCompatActivity {
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();*/
 
-                    // Go back to the login page
-                    Intent intent = new Intent(SignupForm.this, Login.class);
-                    startActivity(intent);
-                }
-                else{
-                    Context context = getApplicationContext();
-                    CharSequence text = getString(R.string.signupform_invalidSignup);
-                    int duration = Toast.LENGTH_LONG;
+                        // Go back to the login page
+                        Intent intent = new Intent(SignupForm.this, Login.class);
+                        startActivity(intent);
+                    } else {
+                        Context context = getApplicationContext();
+                        CharSequence text = getString(R.string.signupform_invalidSignup);
+                        int duration = Toast.LENGTH_LONG;
 
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
                 }
             }
         });
@@ -297,10 +314,12 @@ public class SignupForm extends AppCompatActivity {
         compositeDisposable.add(myAPI.signupParent(parent)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Parent>() {
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void accept(Parent parent) throws Exception {
-                        Toast.makeText(SignupForm.this, "It doesn't crash, YAY!", Toast.LENGTH_LONG).show();
+                    public void accept(String s) throws Exception {
+                        Toast.makeText(SignupForm.this, s, Toast.LENGTH_LONG).show();
+                        if (s.contains("Signup succesful!"))
+                            finish();
                     }
                 }));
     }

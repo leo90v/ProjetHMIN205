@@ -23,7 +23,7 @@ public interface INodeJS {
     Observable<String> signupUser(@Field("email") String email, @Field("password") String password, @Field("name") String name, @Field("last_name") String last_name, @Field("user_type") int user_type);
 
     @POST("signup/parent")
-    Observable<Parent> signupParent(@Body Parent parent);
+    Observable<String> signupParent(@Body Parent parent);
 
     @POST("validate")
     @FormUrlEncoded
