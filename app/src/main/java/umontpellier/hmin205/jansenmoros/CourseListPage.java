@@ -51,9 +51,9 @@ public class CourseListPage extends AppCompatActivity {
 
                                         @Override
                                         public void onClick(View v) {
-                                            Intent intent = new Intent(CourseListPage.this, CoursePage.class);
+                                            /*Intent intent = new Intent(CourseListPage.this, CoursePage.class);
                                             intent.putExtra(CoursePage.COURSE_ID,course.getId());
-                                            startActivity(intent);
+                                            startActivity(intent);*/
                                         }
                                     });
                                 }
