@@ -20,6 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.INodeJS;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
+import umontpellier.hmin205.jansenmoros.POJO.Content;
 import umontpellier.hmin205.jansenmoros.POJO.User;
 
 public class Login extends AppCompatActivity {
@@ -79,8 +80,9 @@ public class Login extends AppCompatActivity {
         btnVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, VideoPlayer.class);
-                intent.putExtra(VideoPlayer.VIDEO_URL,"https://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4");
+                Intent intent = new Intent(Login.this, ContentList.class);
+                intent.putExtra(ContentList.CONTENT_TYPE, ContentList.VIDEO);
+                intent.putExtra(ContentList.COURSE_CODE,1);
                 startActivity(intent);
             }
         });
@@ -88,8 +90,9 @@ public class Login extends AppCompatActivity {
         btnPDF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, PdfReader.class);
-                intent.putExtra(PdfReader.PDF_URL,"https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-00sc-introduction-to-computer-science-and-programming-spring-2011/unit-1/lecture-1-introduction-to-6.00/MIT6_00SCS11_lec01_slides.pdf");
+                Intent intent = new Intent(Login.this, ContentList.class);
+                intent.putExtra(ContentList.CONTENT_TYPE, ContentList.PDF);
+                intent.putExtra(ContentList.COURSE_CODE,1);
                 startActivity(intent);
             }
         });
@@ -97,7 +100,7 @@ public class Login extends AppCompatActivity {
 
     private void loginUser(final String mail, String pass, final View v) {
         // TODO : Uncomment to use the server
-        compositeDisposable.add(myAPI.loginUser(mail,pass)
+        /*compositeDisposable.add(myAPI.loginUser(mail,pass)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<User>() {
@@ -120,12 +123,12 @@ public class Login extends AppCompatActivity {
                         else
                             Toast.makeText(Login.this, user.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                }));
+                }));*/
         // TODO : Comment to use the server
         // Change the mail to the username
-        /*Properties.getInstance().setLogin(true, mail,1,4);
+        Properties.getInstance().setLogin(true, mail,1,4);
         Intent intent = new Intent(Login.this, WelcomePage.class);
-        startActivity(intent);*/
+        startActivity(intent);
     }
 
     public void ShowPopup(View v, final String email) {

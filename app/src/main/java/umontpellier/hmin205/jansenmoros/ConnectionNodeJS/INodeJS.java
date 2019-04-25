@@ -9,6 +9,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import umontpellier.hmin205.jansenmoros.POJO.Content;
 import umontpellier.hmin205.jansenmoros.POJO.Course;
 import umontpellier.hmin205.jansenmoros.POJO.Parent;
 import umontpellier.hmin205.jansenmoros.POJO.User;
@@ -31,4 +32,10 @@ public interface INodeJS {
 
     @GET("course/{grade}")
     Observable<List<Course>> getCourses(@Path("grade") int id_grade);
+
+    @GET("pdf/list/{code}")
+    Observable<List<Content>> getPdfList(@Path("code") int code);
+
+    @GET("video/list/{code}")
+    Observable<List<Content>> getVideoList(@Path("code") int code);
 }
