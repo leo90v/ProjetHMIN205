@@ -64,16 +64,14 @@ public class ContentList extends AppCompatActivity {
                     .subscribe(new Consumer<List<Content>>() {
                         @Override
                         public void accept(List<Content> contents) throws Exception {
+                            String[] courseNames = new String[contents.size()];
+
+                            int i = 0;
                             for (Content c : contents) {
                                 content_list.put(c.getName(), c);
+                                courseNames[i] = c.getName();
+                                i++;
                             }
-
-                            Object[] courses = content_list.values().toArray();
-                            Arrays.sort(courses);
-
-                            String[] courseNames = new String[courses.length];
-                            for (int i = 0; i < courses.length; i++)
-                                courseNames[i] = ((Content)courses[i]).getName();
 
                             listAdapter = new ArrayAdapter(ContentList.this, android.R.layout.simple_list_item_1, courseNames);
                             mainListView.setAdapter(listAdapter);
@@ -99,16 +97,14 @@ public class ContentList extends AppCompatActivity {
                     .subscribe(new Consumer<List<Content>>() {
                         @Override
                         public void accept(List<Content> contents) throws Exception {
+                            String[] courseNames = new String[contents.size()];
+
+                            int i = 0;
                             for (Content c : contents) {
                                 content_list.put(c.getName(), c);
+                                courseNames[i] = c.getName();
+                                i++;
                             }
-
-                            Object[] courses = content_list.values().toArray();
-                            Arrays.sort(courses);
-
-                            String[] courseNames = new String[courses.length];
-                            for (int i = 0; i < courses.length; i++)
-                                courseNames[i] = ((Content)courses[i]).getName();
 
                             listAdapter = new ArrayAdapter(ContentList.this, android.R.layout.simple_list_item_1, courseNames);
                             mainListView.setAdapter(listAdapter);
