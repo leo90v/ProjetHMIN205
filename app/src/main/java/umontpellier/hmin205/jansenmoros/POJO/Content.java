@@ -14,6 +14,9 @@ public class Content {
     @SerializedName("filename")
     @Expose
     private String filename;
+    @SerializedName("name")
+    @Expose
+    private String name;
 
     public Integer getId() {
         return id;
@@ -37,6 +40,14 @@ public class Content {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

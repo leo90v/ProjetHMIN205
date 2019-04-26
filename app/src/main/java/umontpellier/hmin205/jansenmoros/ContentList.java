@@ -1,7 +1,7 @@
 package umontpellier.hmin205.jansenmoros;
 
 import android.content.Intent;
-import android.provider.MediaStore;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,9 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,7 +35,7 @@ public class ContentList extends AppCompatActivity {
     INodeJS myAPI;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    private HashMap<String, Integer> content_list;
+    private HashMap<String, Content> content_list;
     private ListView mainListView;
     private ArrayAdapter<String> listAdapter;
     private int contentType = 0;
@@ -68,7 +65,7 @@ public class ContentList extends AppCompatActivity {
                         @Override
                         public void accept(List<Content> contents) throws Exception {
                             for (Content c : contents) {
-                                content_list.put(c.getFilename(), c.getId());
+                                content_list.put(c.getName(), c);
                             }
                             Object[] courseNames = content_list.keySet().toArray();
                             Arrays.sort(courseNames);
@@ -81,7 +78,8 @@ public class ContentList extends AppCompatActivity {
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                     TextView textView = view.findViewById(android.R.id.text1);
                                     Intent intent = new Intent(ContentList.this, PdfReader.class);
-                                    intent.putExtra(PdfReader.PDF_URL, Properties.getInstance().getBaseUrl() +"pdf/"+ textView.getText().toString());
+                                    Content c = content_list.get(textView.getText().toString());
+                                    intent.putExtra(PdfReader.PDF_URL, Properties.getInstance().getBaseUrl() +"pdf/"+c.getFilename());
                                     startActivity(intent);
                                 }
                             });
@@ -97,7 +95,7 @@ public class ContentList extends AppCompatActivity {
                         @Override
                         public void accept(List<Content> contents) throws Exception {
                             for (Content c : contents) {
-                                content_list.put(c.getFilename(), c.getId());
+                                content_list.put(c.getName(), c);
                             }
                             Object[] courseNames = content_list.keySet().toArray();
                             Arrays.sort(courseNames);
@@ -110,7 +108,8 @@ public class ContentList extends AppCompatActivity {
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                     TextView textView = view.findViewById(android.R.id.text1);
                                     Intent intent = new Intent(ContentList.this, VideoPlayer.class);
-                                    intent.putExtra(VideoPlayer.VIDEO_URL, Properties.getInstance().getBaseUrl() +"video/"+ textView.getText().toString());
+                                    Content c = content_list.get(textView.getText().toString());
+                                    intent.putExtra(VideoPlayer.VIDEO_URL, Properties.getInstance().getBaseUrl() +"video/"+ c.getFilename());
                                     startActivity(intent);
                                 }
                             });

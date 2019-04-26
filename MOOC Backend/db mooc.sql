@@ -39,6 +39,7 @@ create table video(
 	id integer,
     id_course integer,
     filename varchar(50),
+    name varchar(100),
     primary key(id),
     foreign key (id_course) references course(id)
 );
@@ -47,6 +48,7 @@ create table pdf(
 	id integer,
     id_course integer,
     filename varchar(50),
+    name varchar(100),
     primary key(id),
     foreign key (id_course) references course(id)
 );
@@ -58,10 +60,10 @@ insert into user values (2,'John','Doe','john@gmail.com','02ca39431c68cc2edf6d10
 insert into course values (1, '4', 'Introduction to computer science and programming');
 insert into course values (2, '4', 'Artificial Intelligence');
 
-insert into video values (1, 1, 'MIT6_00SCS11_lec01_300k.mp4');
-insert into video values (2, 1, 'MIT6_00SCS11_lec02_300k.mp4');
-insert into video values (3, 1, 'MIT6_00SCS11_lec03_300k.mp4');
+insert into video values (1, 1, 'MIT6_00SCS11_lec01_300k.mp4','Lecture 1');
+insert into video values (2, 1, 'MIT6_00SCS11_lec02_300k.mp4','Lecture 2');
+insert into video values (3, 1, 'MIT6_00SCS11_lec03_300k.mp4','Lecture 3');
 
-insert into pdf values (1, 1, 'MIT6_00SCS11_lec01_slides.pdf');
-insert into pdf values (2, 1, 'MIT6_00SCS11_lec02.pdf');
-insert into pdf values (3, 1, 'MIT6_00SCS11_lec03.pdf');
+insert into pdf values (1, 1, 'MIT6_00SCS11_lec01_slides.pdf','Lecture 1');
+insert into pdf values (2, 1, 'MIT6_00SCS11_lec02.pdf','Lecture 2');
+insert into pdf values (3, 1, 'MIT6_00SCS11_lec03.pdf','Lecture 3');
