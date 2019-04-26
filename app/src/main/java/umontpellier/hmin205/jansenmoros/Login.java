@@ -82,7 +82,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this, ContentList.class);
                 intent.putExtra(ContentList.CONTENT_TYPE, ContentList.VIDEO);
-                intent.putExtra(ContentList.COURSE_CODE,1);
+                intent.putExtra(ContentList.COURSE_CODE,2);
                 startActivity(intent);
             }
         });
@@ -92,7 +92,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this, ContentList.class);
                 intent.putExtra(ContentList.CONTENT_TYPE, ContentList.PDF);
-                intent.putExtra(ContentList.COURSE_CODE,1);
+                intent.putExtra(ContentList.COURSE_CODE,2);
                 startActivity(intent);
             }
         });

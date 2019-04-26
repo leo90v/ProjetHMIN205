@@ -67,8 +67,13 @@ public class ContentList extends AppCompatActivity {
                             for (Content c : contents) {
                                 content_list.put(c.getName(), c);
                             }
-                            Object[] courseNames = content_list.keySet().toArray();
-                            Arrays.sort(courseNames);
+
+                            Object[] courses = content_list.values().toArray();
+                            Arrays.sort(courses);
+
+                            String[] courseNames = new String[courses.length];
+                            for (int i = 0; i < courses.length; i++)
+                                courseNames[i] = ((Content)courses[i]).getName();
 
                             listAdapter = new ArrayAdapter(ContentList.this, android.R.layout.simple_list_item_1, courseNames);
                             mainListView.setAdapter(listAdapter);
@@ -97,8 +102,13 @@ public class ContentList extends AppCompatActivity {
                             for (Content c : contents) {
                                 content_list.put(c.getName(), c);
                             }
-                            Object[] courseNames = content_list.keySet().toArray();
-                            Arrays.sort(courseNames);
+
+                            Object[] courses = content_list.values().toArray();
+                            Arrays.sort(courses);
+
+                            String[] courseNames = new String[courses.length];
+                            for (int i = 0; i < courses.length; i++)
+                                courseNames[i] = ((Content)courses[i]).getName();
 
                             listAdapter = new ArrayAdapter(ContentList.this, android.R.layout.simple_list_item_1, courseNames);
                             mainListView.setAdapter(listAdapter);

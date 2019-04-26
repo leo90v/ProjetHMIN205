@@ -3,7 +3,7 @@ package umontpellier.hmin205.jansenmoros.POJO;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Content {
+public class Content implements Comparable<Content> {
 
     @SerializedName("id")
     @Expose
@@ -50,4 +50,8 @@ public class Content {
         this.name = name;
     }
 
+    @Override
+    public int compareTo(Content o) {
+        return this.getId().compareTo(o.getId());
+    }
 }
