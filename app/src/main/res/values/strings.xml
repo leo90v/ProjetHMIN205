@@ -52,4 +52,5 @@
         <item>Progression</item>
         <item>Accompanied</item>
     </string-array>
+    <string name="course_item_choose">Start learning!</string>
 </resources>

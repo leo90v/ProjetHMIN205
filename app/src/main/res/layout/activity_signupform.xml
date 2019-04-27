@@ -13,29 +13,29 @@
 
         <EditText
             android:id="@+id/surname"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/signupform_hintSurname"/>
 
         <EditText
             android:id="@+id/name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/signupform_hintName"/>
 
         <EditText
             android:id="@+id/email"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/signupform_hintEmail"/>
         <EditText
             android:id="@+id/password"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/signupform_hintPassword"/>
         <EditText
             android:id="@+id/confirmPassword"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/signupform_hintConfirmPassword"/>
 
@@ -53,6 +53,7 @@
 
         <Button
             android:id="@+id/btn_submit"
+            android:layout_gravity="center"
             android:layout_width="223dp"
             android:layout_height="60dp"
             android:text="@string/signupform_btnSubmit" />
