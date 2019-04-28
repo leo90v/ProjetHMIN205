@@ -91,6 +91,7 @@ app.post('/signup/student', (req, res, next) => {
   var last_name = post_data.last_name;
   var email = post_data.email;
   var user_type = post_data.user_type;
+  var grade = post_data.grade;
 
   con.query('SELECT * FROM user WHERE email=?',[email],function(err, result, fields) {
     con.on('error',function(err) {
@@ -100,7 +101,7 @@ app.post('/signup/student', (req, res, next) => {
     if (result && result.length)
       res.json('User already exists!');
     else {
-      con.query("INSERT INTO user (name, last_name, email, password, salt, user_type) VALUES (?,?,?,?,?,?)", [name, last_name, email, password, salt, user_type], function(err, result, fields) {
+      con.query("INSERT INTO user (name, last_name, email, password, salt, user_type, grade) VALUES (?,?,?,?,?,?,?)", [name, last_name, email, password, salt, user_type, grade], function(err, result, fields) {
         con.on('error',function(err) {
           console.log('[MySQL ERROR]', err);
         });
@@ -400,7 +401,7 @@ app.get('/course/:grade', function(req, res) {
       res.end(JSON.stringify(result))
     }
     else {
-      res.end(JSON.stringify('Invalid grade'));
+      res.end(JSON.stringify([{"id":0,"grade":0,"name":"Under construction","description":"Under construction"}]));
     }
   })
 })
