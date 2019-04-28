@@ -79,24 +79,26 @@ public class CourseListPage extends AppCompatActivity {
         Button btnVideo = courseItemView.findViewById(R.id.btn_videos);
         Button btnDocuments = courseItemView.findViewById(R.id.btn_documents);
 
-        btnVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CourseListPage.this, ContentList.class);
-                intent.putExtra(ContentList.CONTENT_TYPE, ContentList.VIDEO);
-                intent.putExtra(ContentList.COURSE_CODE,course.getId());
-                startActivity(intent);
-            }
-        });
+        if (course.getId() != 0) {
+            btnVideo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(CourseListPage.this, ContentList.class);
+                    intent.putExtra(ContentList.CONTENT_TYPE, ContentList.VIDEO);
+                    intent.putExtra(ContentList.COURSE_CODE, course.getId());
+                    startActivity(intent);
+                }
+            });
 
-        btnDocuments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CourseListPage.this, ContentList.class);
-                intent.putExtra(ContentList.CONTENT_TYPE, ContentList.PDF);
-                intent.putExtra(ContentList.COURSE_CODE,course.getId());
-                startActivity(intent);
-            }
-        });
+            btnDocuments.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(CourseListPage.this, ContentList.class);
+                    intent.putExtra(ContentList.CONTENT_TYPE, ContentList.PDF);
+                    intent.putExtra(ContentList.COURSE_CODE, course.getId());
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }

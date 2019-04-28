@@ -35,6 +35,9 @@ public class User {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("id_parent")
+    @Expose
+    private Integer idParent;
 
     public Integer getId() {
         return id;
@@ -42,6 +45,14 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getIdParent() {
+        return idParent;
+    }
+
+    public void setIdParent(Integer idParent) {
+        this.idParent = idParent;
     }
 
     public String getName() {
