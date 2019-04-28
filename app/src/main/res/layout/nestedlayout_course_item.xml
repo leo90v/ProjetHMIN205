@@ -51,7 +51,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAllCaps="false"
-            android:layout_marginRight="2dp"/>
+            android:layout_marginRight="2dp" />
 
         <Button
             android:id="@+id/btn_documents"

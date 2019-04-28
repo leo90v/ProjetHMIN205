@@ -1,13 +1,17 @@
 package umontpellier.hmin205.jansenmoros;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
+
+import static java.security.AccessController.getContext;
 
 public class VideoPlayer extends AppCompatActivity {
 
@@ -28,7 +32,15 @@ public class VideoPlayer extends AppCompatActivity {
 
         Uri vidUri = Uri.parse(vidAddress);
         vidView.setVideoURI(vidUri);
-        MediaController vidControl = new MediaController(this);
+        MediaController vidControl = new MediaController(this) {
+            public boolean dispatchKeyEvent(KeyEvent event)
+            {
+                if (event.getKeyCode() == KeyEvent.KEYCODE_BACK)
+                    ((Activity) getContext()).finish();
+
+                return super.dispatchKeyEvent(event);
+            }
+        };
         vidControl.setAnchorView(vidView);
         vidView.setMediaController(vidControl);
 
@@ -62,5 +74,15 @@ public class VideoPlayer extends AppCompatActivity {
             vidView.setLayoutParams(lp);
             vidView.requestLayout();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
