@@ -1,28 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvCourseName"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tvCourseName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Test title"
+            />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvCourseDescription"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:text="This is a course on artificial intelligence and some other fun stuff that you can only learn here. This is a course on artificial intelligence and some other fun stuff that you can only learn here"/>
+    </TableRow>
+
+    <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginTop="3dp">
 
-    <TextView
-        android:id="@+id/tvCourseDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <Button
+            android:id="@+id/btn_videos"
+            android:text="@string/videos_button"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAllCaps="false"
+            android:layout_marginRight="2dp"/>
 
-    <Button
-        android:id="@+id/btn_chooseCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/course_item_choose" />
+        <Button
+            android:id="@+id/btn_documents"
+            android:text="@string/documents_button"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAllCaps="false"
+            android:layout_marginRight="2dp"/>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_quizzes"
+            android:text="@string/quizzes_button"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAllCaps="false"
+            android:layout_marginRight="2dp"/>
+
+        <Button
+            android:id="@+id/btn_grades"
+            android:text="@string/grades_button"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAllCaps="false"/>
+    </TableRow>
+</TableLayout>

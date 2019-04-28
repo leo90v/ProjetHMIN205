@@ -32,6 +32,7 @@ create table course(
 	id integer,
     grade integer,
     name varchar(100),
+    description varchar(1000),
     primary key(id)
 );
 
@@ -57,8 +58,9 @@ create table pdf(
 insert into user values (1,'Jane','Doe','jane@gmail.com','02ca39431c68cc2edf6d1068fa73d6225307caf5155b2df293505de8894559d9e0669db982dae673f30e79ef63a16180e93d86ecf578ae3edc13e3d7e33a7a89','22ca24db59b3f5b8',2,0,1,0);
 insert into user values (2,'John','Doe','john@gmail.com','02ca39431c68cc2edf6d1068fa73d6225307caf5155b2df293505de8894559d9e0669db982dae673f30e79ef63a16180e93d86ecf578ae3edc13e3d7e33a7a89','22ca24db59b3f5b8',1,4,1,1);
 
-insert into course values (1, 4, 'Introduction to computer science and programming');
-insert into course values (2, 4, 'Introduction to computational thinking and data science');
+insert into course values (1, 4, 'Introduction to computer science and programming','This subject is aimed at students with little or no programming experience. It aims to provide students with an understanding of the role computation can play in solving problems. It also aims to help students, regardless of their major, to feel justifiably confident of their ability to write small programs that allow them to accomplish useful goals. The class will use the Python programming language.');
+insert into course values (2, 4, 'Introduction to computational thinking and data science','6.0002 is the continuation of 6.0001 Introduction to Computer Science and Programming in Python and is intended for students with little or no programming experience. It aims to provide students with an understanding of the role computation can play in solving problems and to help students, regardless of their major, feel justifiably confident of their ability to write small programs that allow them to accomplish useful goals. The class uses the Python 3.5 programming language.');
+insert into course values (3, 4, 'Mathematics for computer science','This subject offers an interactive introduction to discrete mathematics oriented toward computer science and engineering. On completion of 6.042J, students will be able to explain and apply the basic methods of discrete (noncontinuous) mathematics in computer science. They will be able to use these methods in subsequent courses in the design and analysis of algorithms, computability theory, software engineering, and computer systems.');
 
 insert into video values (1, 1, 'MIT6_00SCS11_lec01_300k.mp4','Introduction');
 insert into video values (2, 1, 'MIT6_00SCS11_lec02_300k.mp4','Core elements of a program');
@@ -69,6 +71,11 @@ insert into video values (5, 2, 'MIT6_0002F16_lec02_300k.mp4','Optimization prob
 insert into video values (6, 2, 'MIT6_0002F16_lec03_300k.mp4','Graph models');
 insert into video values (7, 2, 'MIT6_0002F16_lec04_300k.mp4','Stochastic thinking');
 
+insert into video values (8, 3, 'MIT6_042JS15_welcome_6042S15_ipod.mp4','Introduction');
+insert into video values (9, 3, 'MIT6_042JS15_proof1_ipod.mp4','Proofs: Part 1');
+insert into video values (10, 3, 'MIT6_042JS15_proof2_ipod.mp4','Proofs: Part 2');
+insert into video values (11, 3, 'MIT6_042JS15_contradiction_ipod.mp4','Proof by contradiction');
+
 insert into pdf values (1, 1, 'MIT6_00SCS11_lec01_slides.pdf','Introduction');
 insert into pdf values (2, 1, 'MIT6_00SCS11_lec02.pdf','Core elements of a program');
 insert into pdf values (3, 1, 'MIT6_00SCS11_lec03.pdf','Problem solving');
@@ -77,3 +84,41 @@ insert into pdf values (4, 2, 'MIT6_0002F16_lec1.pdf','Introduction');
 insert into pdf values (5, 2, 'MIT6_0002F16_lec2.pdf','Optimization problems');
 insert into pdf values (6, 2, 'MIT6_0002F16_lec3.pdf','Graph models');
 insert into pdf values (7, 2, 'MIT6_0002F16_lec4.pdf','Stochastic thinking');
+
+insert into pdf values (8, 3, 'MIT6_042JS16_Welcome6.042.pdf','Introduction');
+insert into pdf values (9, 3, 'MIT6_042JS16_Introduction.pdf','Proofs');
+insert into pdf values (10, 3, 'MIT6_042JS16_ProofContrad.pdf','Proof by contradiction');
+
+#DEMO INSERTS
+insert into user values (0,'Demo','Demo','demo@gmail.com','demo','demo',1,0,1,0);
+
+insert into course values (4, 0, 'Introduction to computer science and programming','This subject is aimed at students with little or no programming experience. It aims to provide students with an understanding of the role computation can play in solving problems. It also aims to help students, regardless of their major, to feel justifiably confident of their ability to write small programs that allow them to accomplish useful goals. The class will use the Python programming language.');
+insert into course values (5, 0, 'Introduction to computational thinking and data science','6.0002 is the continuation of 6.0001 Introduction to Computer Science and Programming in Python and is intended for students with little or no programming experience. It aims to provide students with an understanding of the role computation can play in solving problems and to help students, regardless of their major, feel justifiably confident of their ability to write small programs that allow them to accomplish useful goals. The class uses the Python 3.5 programming language.');
+insert into course values (6, 0, 'Mathematics for computer science','This subject offers an interactive introduction to discrete mathematics oriented toward computer science and engineering. On completion of 6.042J, students will be able to explain and apply the basic methods of discrete (noncontinuous) mathematics in computer science. They will be able to use these methods in subsequent courses in the design and analysis of algorithms, computability theory, software engineering, and computer systems.');
+
+insert into video values (12, 4, 'MIT6_00SCS11_lec01_300k.mp4','Introduction');
+insert into video values (13, 4, 'MIT6_00SCS11_lec02_300k.mp4','Core elements of a program');
+insert into video values (14, 4, 'MIT6_00SCS11_lec03_300k.mp4','Problem solving');
+
+insert into video values (15, 5, 'MIT6_0002F16_lec01_300k.mp4','Introduction');
+insert into video values (16, 5, 'MIT6_0002F16_lec02_300k.mp4','Optimization problems');
+insert into video values (17, 5, 'MIT6_0002F16_lec03_300k.mp4','Graph models');
+insert into video values (18, 5, 'MIT6_0002F16_lec04_300k.mp4','Stochastic thinking');
+
+insert into video values (19, 6, 'MIT6_042JS15_welcome_6042S15_ipod.mp4','Introduction');
+insert into video values (20, 6, 'MIT6_042JS15_proof1_ipod.mp4','Proofs: Part 1');
+insert into video values (21, 6, 'MIT6_042JS15_proof2_ipod.mp4','Proofs: Part 2');
+insert into video values (22, 6, 'MIT6_042JS15_contradiction_ipod.mp4','Proof by contradiction');
+
+insert into pdf values (11, 4, 'MIT6_00SCS11_lec01_slides.pdf','Introduction');
+insert into pdf values (12, 4, 'MIT6_00SCS11_lec02.pdf','Core elements of a program');
+insert into pdf values (13, 4, 'MIT6_00SCS11_lec03.pdf','Problem solving');
+
+insert into pdf values (14, 5, 'MIT6_0002F16_lec1.pdf','Introduction');
+insert into pdf values (15, 5, 'MIT6_0002F16_lec2.pdf','Optimization problems');
+insert into pdf values (16, 5, 'MIT6_0002F16_lec3.pdf','Graph models');
+insert into pdf values (17, 5, 'MIT6_0002F16_lec4.pdf','Stochastic thinking');
+
+insert into pdf values (18, 6, 'MIT6_042JS16_Welcome6.042.pdf','Introduction');
+insert into pdf values (19, 6, 'MIT6_042JS16_Introduction.pdf','Proofs');
+insert into pdf values (20, 6, 'MIT6_042JS16_ProofContrad.pdf','Proof by contradiction');

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.EventLogTags;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,10 +41,6 @@ public class CourseListPage extends AppCompatActivity {
 
         final LinearLayout layout = (LinearLayout) findViewById(R.id.course_page_layout);
 
-        addCourse(layout, "Title: course 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-        addCourse(layout, "Title: course 2", "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
-        addCourse(layout, "Title: course 3", "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.");
-
         compositeDisposable.add(myAPI.getCourses(Properties.getInstance().getGrade())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -51,21 +48,7 @@ public class CourseListPage extends AppCompatActivity {
                             @Override
                             public void accept(List<Course> T) throws Exception {
                                 for (final Course c : T)
-                                {
-                                    MaterialButton btnCourse = new MaterialButton(CourseListPage.this);
-                                    btnCourse.setText(c.getName());
-                                    layout.addView(btnCourse);
-                                    btnCourse.setOnClickListener(new View.OnClickListener() {
-                                        private Course course = c;
-
-                                        @Override
-                                        public void onClick(View v) {
-                                            /*Intent intent = new Intent(CourseListPage.this, CoursePage.class);
-                                            intent.putExtra(CoursePage.COURSE_ID,course.getId());
-                                            startActivity(intent);*/
-                                        }
-                                    });
-                                }
+                                    addCourse(layout,c);
                             }
                         }));
     }
@@ -82,7 +65,7 @@ public class CourseListPage extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void addCourse(LinearLayout layout, String courseName, String courseDescription){
+    private void addCourse(LinearLayout layout, final Course course){
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View courseItemView = inflater.inflate(R.layout.nestedlayout_course_item, null);
         layout.addView(courseItemView, layout.getChildCount());
@@ -90,7 +73,30 @@ public class CourseListPage extends AppCompatActivity {
         TextView tvName = courseItemView.findViewById(R.id.tvCourseName);
         TextView tvDescription = courseItemView.findViewById(R.id.tvCourseDescription);
 
-        tvName.setText(courseName);
-        tvDescription.setText(courseDescription);
+        tvName.setText(course.getName());
+        tvDescription.setText(course.getDescription());
+
+        Button btnVideo = courseItemView.findViewById(R.id.btn_videos);
+        Button btnDocuments = courseItemView.findViewById(R.id.btn_documents);
+
+        btnVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CourseListPage.this, ContentList.class);
+                intent.putExtra(ContentList.CONTENT_TYPE, ContentList.VIDEO);
+                intent.putExtra(ContentList.COURSE_CODE,course.getId());
+                startActivity(intent);
+            }
+        });
+
+        btnDocuments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CourseListPage.this, ContentList.class);
+                intent.putExtra(ContentList.CONTENT_TYPE, ContentList.PDF);
+                intent.putExtra(ContentList.COURSE_CODE,course.getId());
+                startActivity(intent);
+            }
+        });
     }
 }

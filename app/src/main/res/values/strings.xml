@@ -2,7 +2,7 @@
     <string name="app_name">My Application</string>
     <string name="login_button">Login</string>
     <string name="signup_button">Sign up</string>
-    <string name="video_button">Video</string>
+    <string name="demo_button">Demo</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="signup_child_button">Student</string>
@@ -26,8 +26,7 @@
     <string name="popup_message">Enter the activation code</string>
     <string name="welcome_profile">Profile</string>
     <string name="welcome_courses">Courses</string>
-    <string name="welcome_exercises">Exercises</string>
-    <string name="welcome_tchat">tChat</string>
+    <string name="welcome_progression">Progression</string>
     <string name="welcome_welcome">Welcome</string>
     <string-array name="currentYear_array">
         <item>Grade 1</item>
@@ -52,5 +51,8 @@
         <item>Progression</item>
         <item>Accompanied</item>
     </string-array>
-    <string name="course_item_choose">Start learning!</string>
+    <string name="videos_button">Videos</string>
+    <string name="documents_button">Documents</string>
+    <string name="quizzes_button">Quizzes</string>
+    <string name="grades_button">Grades</string>
 </resources>

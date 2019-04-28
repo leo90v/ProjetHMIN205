@@ -29,7 +29,7 @@ public class Login extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     MaterialEditText email, password;
-    MaterialButton btnLogin, btnSignup, btnVideo, btnPDF;
+    MaterialButton btnLogin, btnSignup, btnDemo;
 
     Dialog myDialog;
 
@@ -59,8 +59,7 @@ public class Login extends AppCompatActivity {
         email = (MaterialEditText) findViewById(R.id.email);
         password = (MaterialEditText) findViewById(R.id.password);
         btnSignup = (MaterialButton) findViewById(R.id.signUp_button);
-        btnVideo = (MaterialButton) findViewById(R.id.video_button);
-        btnPDF = (MaterialButton) findViewById(R.id.pdf_button);
+        btnDemo = (MaterialButton) findViewById(R.id.demo_button);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,22 +76,11 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        btnVideo.setOnClickListener(new View.OnClickListener() {
+        btnDemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, ContentList.class);
-                intent.putExtra(ContentList.CONTENT_TYPE, ContentList.VIDEO);
-                intent.putExtra(ContentList.COURSE_CODE,2);
-                startActivity(intent);
-            }
-        });
-
-        btnPDF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Login.this, ContentList.class);
-                intent.putExtra(ContentList.CONTENT_TYPE, ContentList.PDF);
-                intent.putExtra(ContentList.COURSE_CODE,2);
+                Properties.getInstance().setLogin(true, "demo@gmail.com",1,0);
+                Intent intent = new Intent(Login.this, CourseListPage.class);
                 startActivity(intent);
             }
         });

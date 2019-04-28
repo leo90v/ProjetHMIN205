@@ -29,19 +29,11 @@
         android:text="@string/welcome_courses" />
 
     <Button
-        android:id="@+id/btn_exercises"
+        android:id="@+id/btn_progression"
         android:layout_width="227dp"
         android:layout_height="117dp"
         android:layout_below="@+id/btn_courses"
         android:layout_centerHorizontal="true"
-        android:text="@string/welcome_exercises" />
-
-    <Button
-        android:id="@+id/btn_teacher"
-        android:layout_width="227dp"
-        android:layout_height="117dp"
-        android:layout_below="@+id/btn_exercises"
-        android:layout_centerHorizontal="true"
-        android:text="@string/welcome_tchat" />
+        android:text="@string/welcome_progression" />
 
 </RelativeLayout>
