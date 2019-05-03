@@ -37,6 +37,8 @@ public class ProgressionCurve extends AppCompatActivity {
 
     INodeJS myAPI;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+    int year = 2019;
+    int user = 2;
 
     @Override
     protected void onStop() {
@@ -98,7 +100,7 @@ public class ProgressionCurve extends AppCompatActivity {
         lineChart.getLegend().setTextSize(12f);
         lineChart.setMarker(new CustomMarkerView(ProgressionCurve.this,R.layout.custom_markerview_layout));
 
-        compositeDisposable.add(myAPI.getPdfViews(2019,2)
+        compositeDisposable.add(myAPI.getPdfViews(year, user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<MonthProgress>>() {
@@ -133,7 +135,7 @@ public class ProgressionCurve extends AppCompatActivity {
                     }
                 }));
 
-        compositeDisposable.add(myAPI.getVideoViews(2019,2)
+        compositeDisposable.add(myAPI.getVideoViews(year, user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<MonthProgress>>() {
