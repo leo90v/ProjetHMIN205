@@ -46,4 +46,7 @@ dependencies {
 
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     //implementation 'org.apache.commons:commons-io:2.6'
+
+    //MPAndroidChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
 }

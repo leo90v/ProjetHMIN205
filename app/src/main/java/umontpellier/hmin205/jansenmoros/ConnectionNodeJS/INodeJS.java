@@ -11,6 +11,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import umontpellier.hmin205.jansenmoros.POJO.Content;
 import umontpellier.hmin205.jansenmoros.POJO.Course;
+import umontpellier.hmin205.jansenmoros.POJO.MonthProgress;
 import umontpellier.hmin205.jansenmoros.POJO.Parent;
 import umontpellier.hmin205.jansenmoros.POJO.User;
 
@@ -38,4 +39,10 @@ public interface INodeJS {
 
     @GET("video/list/{code}")
     Observable<List<Content>> getVideoList(@Path("code") int code);
+
+    @GET("video/count/{year}/{user}")
+    Observable<List<MonthProgress>> getVideoViews(@Path("year") int year, @Path("user") int user);
+
+    @GET("pdf/count/{year}/{user}")
+    Observable<List<MonthProgress>> getPdfViews(@Path("year") int year, @Path("user") int user);
 }

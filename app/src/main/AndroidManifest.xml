@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ContentList"></activity>
+        <activity android:name=".ProgressionCurve"></activity>
+        <activity android:name=".ContentList" />
         <activity android:name=".CourseListPage" />
         <activity android:name=".PdfReader" />
         <activity

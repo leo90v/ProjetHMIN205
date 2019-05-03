@@ -79,8 +79,10 @@ public class Login extends AppCompatActivity {
         btnDemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Properties.getInstance().setLogin(true, "demo@gmail.com",1,0);
+                /*Properties.getInstance().setLogin(true, "demo@gmail.com",1,0);
                 Intent intent = new Intent(Login.this, CourseListPage.class);
+                startActivity(intent);*/
+                Intent intent = new Intent(Login.this, ProgressionCurve.class);
                 startActivity(intent);
             }
         });

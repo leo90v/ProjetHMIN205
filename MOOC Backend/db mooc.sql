@@ -1,5 +1,7 @@
 use MOOC;
 
+drop table pdfviews;
+drop table videoviews;
 drop table user_validation;
 drop table user;
 drop table video;
@@ -54,7 +56,27 @@ create table pdf(
     foreign key (id_course) references course(id)
 );
 
-#INSERTS
+create table pdfviews(
+	id integer AUTO_INCREMENT,
+    id_pdf integer,
+    id_user integer,
+    completion_time datetime,
+    primary key(id),
+    foreign key (id_pdf) references pdf(id),
+    foreign key (id_user) references user(id)
+);
+
+create table videoviews(
+	id integer AUTO_INCREMENT,
+    id_video integer,
+    id_user integer,
+    completion_time datetime,
+    primary key(id),
+    foreign key (id_video) references video(id),
+    foreign key (id_user) references user(id)
+);
+
+#COURSES INSERTS
 insert into user values (1,'Jane','Doe','jane@gmail.com','02ca39431c68cc2edf6d1068fa73d6225307caf5155b2df293505de8894559d9e0669db982dae673f30e79ef63a16180e93d86ecf578ae3edc13e3d7e33a7a89','22ca24db59b3f5b8',2,0,1,0);
 insert into user values (2,'John','Doe','john@gmail.com','02ca39431c68cc2edf6d1068fa73d6225307caf5155b2df293505de8894559d9e0669db982dae673f30e79ef63a16180e93d86ecf578ae3edc13e3d7e33a7a89','22ca24db59b3f5b8',1,4,1,1);
 
@@ -88,6 +110,30 @@ insert into pdf values (7, 2, 'MIT6_0002F16_lec4.pdf','Stochastic thinking');
 insert into pdf values (8, 3, 'MIT6_042JS16_Welcome6.042.pdf','Introduction');
 insert into pdf values (9, 3, 'MIT6_042JS16_Introduction.pdf','Proofs');
 insert into pdf values (10, 3, 'MIT6_042JS16_ProofContrad.pdf','Proof by contradiction');
+
+#PROGRESSION INSERTS
+insert into pdfviews (id_pdf,id_user,completion_time) values (1,2,'2019-01-01 00:00:00');
+insert into pdfviews (id_pdf,id_user,completion_time) values (2,2,'2019-01-01 00:00:00');
+insert into pdfviews (id_pdf,id_user,completion_time) values (3,2,'2019-02-01 00:00:00');
+insert into pdfviews (id_pdf,id_user,completion_time) values (4,2,'2019-03-01 00:00:00');
+insert into pdfviews (id_pdf,id_user,completion_time) values (5,2,'2019-03-01 00:00:00');
+insert into pdfviews (id_pdf,id_user,completion_time) values (6,2,'2019-03-01 00:00:00');
+insert into pdfviews (id_pdf,id_user,completion_time) values (7,2,'2019-04-01 00:00:00');
+insert into pdfviews (id_pdf,id_user,completion_time) values (8,2,'2019-04-01 00:00:00');
+insert into pdfviews (id_pdf,id_user,completion_time) values (9,2,'2019-04-01 00:00:00');
+insert into pdfviews (id_pdf,id_user,completion_time) values (10,2,'2019-05-01 00:00:00');
+
+insert into videoviews (id_video,id_user,completion_time) values (1,2,'2019-01-01 00:00:00');
+insert into videoviews (id_video,id_user,completion_time) values (2,2,'2019-02-01 00:00:00');
+insert into videoviews (id_video,id_user,completion_time) values (3,2,'2019-03-01 00:00:00');
+insert into videoviews (id_video,id_user,completion_time) values (4,2,'2019-04-01 00:00:00');
+insert into videoviews (id_video,id_user,completion_time) values (5,2,'2019-05-01 00:00:00');
+insert into videoviews (id_video,id_user,completion_time) values (6,2,'2019-06-01 00:00:00');
+insert into videoviews (id_video,id_user,completion_time) values (7,2,'2019-07-01 00:00:00');
+insert into videoviews (id_video,id_user,completion_time) values (8,2,'2019-08-01 00:00:00');
+insert into videoviews (id_video,id_user,completion_time) values (9,2,'2019-09-01 00:00:00');
+insert into videoviews (id_video,id_user,completion_time) values (10,2,'2019-10-01 00:00:00');
+insert into videoviews (id_video,id_user,completion_time) values (11,2,'2019-11-01 00:00:00');
 
 #DEMO INSERTS
 insert into user values (0,'Demo','Demo','demo@gmail.com','demo','demo',1,0,1,0);
