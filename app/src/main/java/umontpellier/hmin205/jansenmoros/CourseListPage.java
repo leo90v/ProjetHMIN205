@@ -41,6 +41,15 @@ public class CourseListPage extends AppCompatActivity {
 
         final LinearLayout layout = (LinearLayout) findViewById(R.id.course_page_layout);
 
+        Button bQuiz = (Button) findViewById(R.id.buttonQuiz);
+        bQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CourseListPage.this, QcmPage.class);
+                startActivity(intent);
+            }
+        });
+
         compositeDisposable.add(myAPI.getCourses(Properties.getInstance().getGrade())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
