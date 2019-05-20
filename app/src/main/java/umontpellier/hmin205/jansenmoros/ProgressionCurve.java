@@ -19,6 +19,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -34,11 +35,12 @@ import umontpellier.hmin205.jansenmoros.POJO.MonthProgress;
 public class ProgressionCurve extends AppCompatActivity {
 
     private LineChart lineChart;
+    public static final String STUDENT_ID = "student_id";
 
     INodeJS myAPI;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-    int year = 2019;
-    int user = 2;
+    int year = Calendar.getInstance().get(Calendar.YEAR);
+    int user;
 
     @Override
     protected void onStop() {
@@ -56,6 +58,8 @@ public class ProgressionCurve extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progression_curve);
+
+        user = getIntent().getIntExtra(STUDENT_ID,0);
 
         Retrofit retrofit = RESTClient.getInstance();
         myAPI = retrofit.create(INodeJS.class);

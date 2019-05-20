@@ -4,11 +4,17 @@ import android.content.Intent;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,6 +46,7 @@ public class ContentList extends AppCompatActivity {
     private ArrayAdapter<String> listAdapter;
     private int contentType = 0;
     private int courseCode = 0;
+    private int pos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +65,7 @@ public class ContentList extends AppCompatActivity {
         content_list = new HashMap<>();
 
         if (contentType == PDF) {
-            compositeDisposable.add(myAPI.getPdfList(courseCode)
+            compositeDisposable.add(myAPI.getPdfList(courseCode, Properties.getInstance().getUserId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<List<Content>>() {
@@ -73,19 +80,57 @@ public class ContentList extends AppCompatActivity {
                                 i++;
                             }
 
-                            listAdapter = new ArrayAdapter(ContentList.this, android.R.layout.simple_list_item_1, courseNames);
+                            listAdapter = new ArrayAdapter(ContentList.this, android.R.layout.simple_list_item_checked, courseNames);
                             mainListView.setAdapter(listAdapter);
+
+                            mainListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+                            mainListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+                                @Override
+                                public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+
+                                }
+
+                                @Override
+                                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                                    item.setChecked(true);
+                                    return false;
+                                }
+
+                                @Override
+                                public void onDestroyActionMode(ActionMode mode) {
+
+                                }
+                            });
 
                             mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    pos = position;
                                     TextView textView = view.findViewById(android.R.id.text1);
                                     Intent intent = new Intent(ContentList.this, PdfReader.class);
                                     Content c = content_list.get(textView.getText().toString());
                                     intent.putExtra(PdfReader.PDF_URL, Properties.getInstance().getBaseUrl() +"pdf/"+c.getFilename());
+                                    intent.putExtra(PdfReader.PDF_ID, c.getId());
                                     startActivity(intent);
                                 }
                             });
+
+                            for (i = 0; i < contents.size(); i++) {
+                                if (contents.get(i).getViewed() == 1)
+                                    mainListView.setItemChecked(i,true);
+                                else
+                                    mainListView.setItemChecked(i,false);
+                            }
                         }
                     }));
         }
@@ -112,6 +157,7 @@ public class ContentList extends AppCompatActivity {
                             mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    pos = position;
                                     TextView textView = view.findViewById(android.R.id.text1);
                                     Intent intent = new Intent(ContentList.this, VideoPlayer.class);
                                     Content c = content_list.get(textView.getText().toString());
@@ -122,6 +168,12 @@ public class ContentList extends AppCompatActivity {
                         }
                     }));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        mainListView.setItemChecked(pos,true);
+        super.onResume();
     }
 
     @Override

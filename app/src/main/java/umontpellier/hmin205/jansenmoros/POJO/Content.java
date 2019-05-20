@@ -17,6 +17,9 @@ public class Content implements Comparable<Content> {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("viewed")
+    @Expose
+    private int viewed;
 
     public Integer getId() {
         return id;
@@ -48,6 +51,14 @@ public class Content implements Comparable<Content> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(Integer viewed) {
+        this.viewed = viewed;
     }
 
     @Override

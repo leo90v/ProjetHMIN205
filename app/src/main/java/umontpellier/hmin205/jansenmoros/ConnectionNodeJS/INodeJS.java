@@ -34,8 +34,8 @@ public interface INodeJS {
     @GET("course/{grade}")
     Observable<List<Course>> getCourses(@Path("grade") int id_grade);
 
-    @GET("pdf/list/{code}")
-    Observable<List<Content>> getPdfList(@Path("code") int code);
+    @GET("pdf/list/{code}/{user}")
+    Observable<List<Content>> getPdfList(@Path("code") int code, @Path("user") int user);
 
     @GET("video/list/{code}")
     Observable<List<Content>> getVideoList(@Path("code") int code);
@@ -45,4 +45,10 @@ public interface INodeJS {
 
     @GET("pdf/count/{year}/{user}")
     Observable<List<MonthProgress>> getPdfViews(@Path("year") int year, @Path("user") int user);
+
+    @GET("pdf/set/{id_pdf}/{user}")
+    Observable<String> setPdfViews(@Path("id_pdf") int id_pdf, @Path("user") int user);
+
+    @GET("video/set/{id_video}/{user}")
+    Observable<String> setVideoViews(@Path("id_video") int id_video, @Path("user") int user);
 }

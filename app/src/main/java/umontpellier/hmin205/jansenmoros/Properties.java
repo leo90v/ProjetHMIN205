@@ -9,6 +9,7 @@ public class Properties {
     private String baseUrl;
     private int userType;
     private int grade;
+    private int userId;
 
     protected Properties(){
         this.isLoggedIn = false;
@@ -23,11 +24,12 @@ public class Properties {
         return mInstance;
     }
 
-    public synchronized void setLogin(boolean isLoggedIn, String username, int userType, int grade){
+    public synchronized void setLogin(boolean isLoggedIn, String username, int userType, int grade, int userId){
         this.isLoggedIn = isLoggedIn;
         this.username = username;
         this.userType = userType;
         this.grade = grade;
+        this.userId = userId;
     }
 
     public String getUsername(){return this.username;}
@@ -37,6 +39,8 @@ public class Properties {
     public String getBaseUrl() {return this.baseUrl;}
 
     public int getUserType() {return this.userType;}
+
+    public int getUserId() {return this.userId;}
 
     public int getGrade() {return this.grade;}
 }

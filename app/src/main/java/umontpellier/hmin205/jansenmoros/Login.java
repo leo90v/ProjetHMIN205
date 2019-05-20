@@ -79,11 +79,11 @@ public class Login extends AppCompatActivity {
         btnDemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Properties.getInstance().setLogin(true, "demo@gmail.com",1,0);
+                Properties.getInstance().setLogin(true, "demo@gmail.com",1,0, 3);
                 Intent intent = new Intent(Login.this, CourseListPage.class);
-                startActivity(intent);*/
-                Intent intent = new Intent(Login.this, ProgressionCurve.class);
                 startActivity(intent);
+                /*Intent intent = new Intent(Login.this, ProgressionCurve.class);
+                startActivity(intent);*/
             }
         });
     }
@@ -97,7 +97,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void accept(User user) throws Exception {
                         if (user.getId() > 0) {
-                            Properties.getInstance().setLogin(true, mail, user.getUserType(), user.getGrade());
+                            Properties.getInstance().setLogin(true, mail, user.getUserType(), user.getGrade(), user.getId());
                             if (user.getActive() == 1) {
                                 // Change the mail to the username
                                 Intent intent = new Intent(Login.this, WelcomePage.class);

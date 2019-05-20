@@ -120,8 +120,8 @@ insert into pdfviews (id_pdf,id_user,completion_time) values (5,2,'2019-03-01 00
 insert into pdfviews (id_pdf,id_user,completion_time) values (6,2,'2019-03-01 00:00:00');
 insert into pdfviews (id_pdf,id_user,completion_time) values (7,2,'2019-04-01 00:00:00');
 insert into pdfviews (id_pdf,id_user,completion_time) values (8,2,'2019-04-01 00:00:00');
-insert into pdfviews (id_pdf,id_user,completion_time) values (9,2,'2019-04-01 00:00:00');
-insert into pdfviews (id_pdf,id_user,completion_time) values (10,2,'2019-05-01 00:00:00');
+#insert into pdfviews (id_pdf,id_user,completion_time) values (9,2,'2019-04-01 00:00:00');
+#insert into pdfviews (id_pdf,id_user,completion_time) values (10,2,'2019-05-01 00:00:00');
 
 insert into videoviews (id_video,id_user,completion_time) values (1,2,'2019-01-01 00:00:00');
 insert into videoviews (id_video,id_user,completion_time) values (2,2,'2019-02-01 00:00:00');
@@ -131,9 +131,9 @@ insert into videoviews (id_video,id_user,completion_time) values (5,2,'2019-05-0
 insert into videoviews (id_video,id_user,completion_time) values (6,2,'2019-06-01 00:00:00');
 insert into videoviews (id_video,id_user,completion_time) values (7,2,'2019-07-01 00:00:00');
 insert into videoviews (id_video,id_user,completion_time) values (8,2,'2019-08-01 00:00:00');
-insert into videoviews (id_video,id_user,completion_time) values (9,2,'2019-09-01 00:00:00');
-insert into videoviews (id_video,id_user,completion_time) values (10,2,'2019-10-01 00:00:00');
-insert into videoviews (id_video,id_user,completion_time) values (11,2,'2019-11-01 00:00:00');
+#insert into videoviews (id_video,id_user,completion_time) values (9,2,'2019-09-01 00:00:00');
+#insert into videoviews (id_video,id_user,completion_time) values (10,2,'2019-10-01 00:00:00');
+#insert into videoviews (id_video,id_user,completion_time) values (11,2,'2019-11-01 00:00:00');
 
 #DEMO INSERTS
 insert into user values (0,'Demo','Demo','demo@gmail.com','demo','demo',1,0,1,0);
