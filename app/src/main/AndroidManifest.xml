@@ -29,6 +29,7 @@
         <activity android:name=".Signup" />
         <activity android:name=".SignupForm" />
         <activity android:name=".WelcomePage" />
+        <activity android:name=".QcmPage" />
     </application>
 
 </manifest>

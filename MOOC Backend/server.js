@@ -424,6 +424,30 @@ app.get('/video/list/:course', function(req, res) {
   })
 })
 
+app.get('/video/list/:course/:user', function(req, res) {
+  let course = req.params.course
+  let user = req.params.user
+
+  con.query(`select video.*, not isnull(videoviews.id) viewed
+             from video left outer join videoviews
+             on video.id = videoviews.id_video
+             where video.id_course=?
+             and (videoviews.id_user=? or isnull(videoviews.id_user))`,
+  [course, user], function(error, result, fields) {
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      res.end(JSON.stringify(result))
+    }
+    else {
+      res.end(JSON.stringify('Invalid course'));
+    }
+  })
+})
+
 //Get pdfs
 app.get('/pdf/list/:course', function(req, res) {
   let course = req.params.course
@@ -440,6 +464,256 @@ app.get('/pdf/list/:course', function(req, res) {
       res.end(JSON.stringify('Invalid course'));
     }
   })
+})
+
+app.get('/pdf/list/:course/:user', function(req, res) {
+  let course = req.params.course
+  let user = req.params.user
+
+  con.query(`select pdf.*, not isnull(pdfviews.id) viewed
+             from pdf left outer join pdfviews
+             on pdf.id = pdfviews.id_pdf
+             where pdf.id_course=?
+             and (pdfviews.id_user=? or isnull(pdfviews.id_user))`,
+  [course, user], function(error, result, fields) {
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      res.end(JSON.stringify(result))
+    }
+    else {
+      res.end(JSON.stringify('Invalid course'));
+    }
+  })
+})
+
+//Get pdf views
+app.get('/pdf/count/:year/:user', function(req, res) {
+  let year = req.params.year
+  let user = req.params.user
+
+  con.query(`select COUNT(id_pdf) as 'count', MONTH(completion_time) as 'month'
+            from pdfviews
+            where id_user = ? and YEAR(completion_time) = ?
+            group by 2
+            order by 2`, [user,year], function(error, result, fields) {
+
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      res.end(JSON.stringify(result))
+    }
+    else {
+      res.end(JSON.stringify([{"count":0,"month":0}]));
+    }
+  })
+})
+
+//Get video views
+app.get('/video/count/:year/:user', function(req, res) {
+  let year = req.params.year
+  let user = req.params.user
+
+  con.query(`select COUNT(id_video) as 'count', MONTH(completion_time) as 'month'
+             from videoviews
+             where id_user = ? and YEAR(completion_time) = ?
+             group by 2
+             order by 2;`, [user,year], function(error, result, fields) {
+
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      res.end(JSON.stringify(result))
+    }
+    else {
+      res.end(JSON.stringify([{"count":0,"month":0}]));
+    }
+  })
+})
+
+//Set video views
+app.get('/video/set/:video/:user', function(req, res) {
+  let video = req.params.video
+  let user = req.params.user
+
+  con.query(`select *
+             from videoviews
+             where id_user = ? and id_video = ?
+            `, [user,video], function(error, result, fields) {
+
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      res.end(JSON.stringify("Success"))
+    }
+    else {
+      con.query("INSERT INTO videoviews (id_video, id_user, completion_time) VALUES (?,?,now())", [video, user], function(err, result, fields) {
+        con.on('error',function(err) {
+          console.log('[MySQL ERROR]', err);
+          if (err) {
+              throw err;
+              res.end(JSON.stringify("Error"));
+          }
+        });
+        res.end(JSON.stringify("Success"));
+      });
+    }
+  })
+})
+
+//Set pdf views
+app.get('/pdf/set/:pdf/:user', function(req, res) {
+  let pdf = req.params.pdf
+  let user = req.params.user
+
+  con.query(`select *
+             from pdfviews
+             where id_user = ? and id_pdf = ?
+            `, [user,pdf], function(error, result, fields) {
+
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      res.end(JSON.stringify("Success"))
+    }
+    else {
+      con.query("INSERT INTO pdfviews (id_pdf, id_user, completion_time) VALUES (?,?,now())", [pdf, user], function(err, result, fields) {
+        con.on('error',function(err) {
+          console.log('[MySQL ERROR]', err);
+          if (err) {
+              throw err;
+              res.end(JSON.stringify("Error"));
+          }
+        });
+        res.end(JSON.stringify("Success"));
+      });
+    }
+  })
+})
+
+//Get Quiz and Result
+app.get('/quiz/:id/:user', function(req, res) {
+  let quiz = req.params.id
+  let user = req.params.user
+
+  con.query(`select a.id_question, q.question, a.id, a.answer,
+                  a.correct, qr.id_answer user_answer
+             from question q inner join answer a
+	                on q.id_quiz = ? and q.id = a.id_question
+             left outer join quiz_result qr
+                  on qr.id_quiz = q.id_quiz and qr.id_question = a.id_question
+                  and qr.id_user = ?
+             order by a.id_question, a.id;`,
+  [quiz, user], function(error, result, fields) {
+
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      let quizjson = new Array();
+      for (i = 0; i < result.length; i+=4) {
+        a1 = {id: result[i].id, answer: result[i].answer, correct: result[i].correct}
+        a2 = {id: result[i+1].id, answer: result[i+1].answer, correct: result[i+1].correct}
+        a3 = {id: result[i+2].id, answer: result[i+2].answer, correct: result[i+2].correct}
+        a4 = {id: result[i+3].id, answer: result[i+3].answer, correct: result[i+3].correct}
+        q = {id_question: result[i].id_question, question: result[i].question}
+        if (result[i].user_answer)
+          q['user_answer'] = result[i].user_answer
+        q['answers'] = [a1,a2,a3,a4];
+        quizjson.push(q);
+      }
+      res.end(JSON.stringify(quizjson))
+    }
+    else {
+      res.end(JSON.stringify([{"id_question":0}]));
+    }
+  })
+})
+
+//Get Quiz List
+app.get('/quiz/list/:course/:user', function(req, res) {
+  let course = req.params.course
+  let user = req.params.user
+
+  con.query(`select distinct q.id, q.id_course, q.name,
+	               not isnull(qr.id_user) viewed
+             from quiz q
+             left outer join quiz_result qr
+             on qr.id_quiz = q.id
+             where q.id_course = ? and (qr.id_user = ? or isnull(qr.id_user))
+             order by q.id;`,
+  [course, user], function(error, result, fields) {
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      res.end(JSON.stringify(result))
+    }
+    else {
+      res.end(JSON.stringify([{"id":0,"id_course":0,"name":"No quizzes","viewed":0}]));
+    }
+  })
+})
+
+//Save quiz answers
+app.post('/quiz/answer', (req, res, next) => {
+  var post_data = req.body;
+  var answers = post_data.answers;
+  var user_id = post_data.id_user;
+  var quiz_id = post_data.id_quiz;
+
+  var n_answers = answers.length;
+  var inserted_answers = 0;
+
+  con.beginTransaction(function (err) {
+    answers.forEach(function(answer) {
+      con.query("INSERT INTO quiz_result (id_quiz, id_question, id_answer, id_user) VALUES (?,?,?,?)",
+      [quiz_id, answer.id_question, answer.user_answer, user_id],
+      function(err, result, fields) {
+        con.on('error',function(err) {
+          console.log('[MySQL ERROR]', err);
+          if (err) {
+            con.rollback(function() {
+              throw err;
+              res.end(JSON.stringify('Error'));
+            });
+          }
+        });
+
+        inserted_answers++;
+        if (inserted_answers == n_answers) {
+          con.commit(function(err) {
+            if (err) {
+              con.rollback(function() {
+                throw err;
+                res.end(JSON.stringify('Error'));
+              });
+            }
+            res.end(JSON.stringify('Success'));
+          });
+        }
+      });
+    });
+  });
 })
 
 //Send email

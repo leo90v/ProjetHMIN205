@@ -4,17 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.EventLogTags;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.button.MaterialButton;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -40,15 +35,6 @@ public class CourseListPage extends AppCompatActivity {
         myAPI = retrofit.create(INodeJS.class);
 
         final LinearLayout layout = (LinearLayout) findViewById(R.id.course_page_layout);
-
-        /*Button bQuiz = (Button) findViewById(R.id.buttonQuiz);
-        bQuiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CourseListPage.this, QcmPage.class);
-                startActivity(intent);
-            }
-        });*/
 
         compositeDisposable.add(myAPI.getCourses(Properties.getInstance().getGrade())
                         .subscribeOn(Schedulers.io())
@@ -87,6 +73,8 @@ public class CourseListPage extends AppCompatActivity {
 
         Button btnVideo = courseItemView.findViewById(R.id.btn_videos);
         Button btnDocuments = courseItemView.findViewById(R.id.btn_documents);
+        Button btnQuizzes = courseItemView.findViewById(R.id.btn_quizzes);
+        Button btnGrades = courseItemView.findViewById(R.id.btn_grades);
 
         if (course.getId() != 0) {
             btnVideo.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +92,16 @@ public class CourseListPage extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(CourseListPage.this, ContentList.class);
                     intent.putExtra(ContentList.CONTENT_TYPE, ContentList.PDF);
+                    intent.putExtra(ContentList.COURSE_CODE, course.getId());
+                    startActivity(intent);
+                }
+            });
+
+            btnQuizzes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(CourseListPage.this, ContentList.class);
+                    intent.putExtra(ContentList.CONTENT_TYPE, ContentList.QUIZ);
                     intent.putExtra(ContentList.COURSE_CODE, course.getId());
                     startActivity(intent);
                 }

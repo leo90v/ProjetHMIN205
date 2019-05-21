@@ -1,5 +1,9 @@
 use MOOC;
 
+drop table quiz_result;
+drop table answer;
+drop table question;
+drop table quiz;
 drop table pdfviews;
 drop table videoviews;
 drop table user_validation;
@@ -74,6 +78,39 @@ create table videoviews(
     primary key(id),
     foreign key (id_video) references video(id),
     foreign key (id_user) references user(id)
+);
+
+create table quiz(
+	id integer AUTO_INCREMENT,
+    name varchar(100),
+    id_course integer,
+    primary key(id),
+    foreign key (id_course) references course(id)
+);
+
+create table question(
+	id integer AUTO_INCREMENT,
+    id_quiz integer,
+    question varchar(100),
+    primary key(id),
+    foreign key (id_quiz) references quiz(id)
+);
+
+create table answer(
+	id integer AUTO_INCREMENT,
+    id_question integer,
+    answer varchar(100),
+    correct integer,
+    primary key(id),
+    foreign key (id_question) references question(id)
+);
+
+create table quiz_result(
+    id_quiz integer,
+    id_question integer,
+    id_answer integer,
+    id_user integer,
+    primary key(id_quiz, id_question, id_user)
 );
 
 #COURSES INSERTS
@@ -168,3 +205,63 @@ insert into pdf values (17, 5, 'MIT6_0002F16_lec4.pdf','Stochastic thinking');
 insert into pdf values (18, 6, 'MIT6_042JS16_Welcome6.042.pdf','Introduction');
 insert into pdf values (19, 6, 'MIT6_042JS16_Introduction.pdf','Proofs');
 insert into pdf values (20, 6, 'MIT6_042JS16_ProofContrad.pdf','Proof by contradiction');
+
+#QUIZ INSERTS
+insert into quiz values (1,'Quiz 1',3);
+
+insert into question values (1,1,'Question 1');
+insert into question values (2,1,'Question 2');
+insert into question values (3,1,'Question 3');
+insert into question values (4,1,'Question 4');
+
+insert into answer values (1,1,'Answer 1',1);
+insert into answer values (2,1,'Answer 2',0);
+insert into answer values (3,1,'Answer 3',0);
+insert into answer values (4,1,'Answer 4',0);
+
+insert into answer values (5,2,'Answer 1',0);
+insert into answer values (6,2,'Answer 2',1);
+insert into answer values (7,2,'Answer 3',0);
+insert into answer values (8,2,'Answer 4',0);
+
+insert into answer values (9,3,'Answer 1',0);
+insert into answer values (10,3,'Answer 2',0);
+insert into answer values (11,3,'Answer 3',1);
+insert into answer values (12,3,'Answer 4',0);
+
+insert into answer values (13,4,'Answer 1',0);
+insert into answer values (14,4,'Answer 2',0);
+insert into answer values (15,4,'Answer 3',0);
+insert into answer values (16,4,'Answer 4',1);
+
+insert into quiz values (2,'Quiz 2',3);
+
+insert into question values (5,2,'Question 1');
+insert into question values (6,2,'Question 2');
+insert into question values (7,2,'Question 3');
+insert into question values (8,2,'Question 4');
+
+insert into answer values (17,5,'Answer 1',1);
+insert into answer values (18,5,'Answer 2',0);
+insert into answer values (19,5,'Answer 3',0);
+insert into answer values (20,5,'Answer 4',0);
+
+insert into answer values (21,6,'Answer 1',0);
+insert into answer values (22,6,'Answer 2',1);
+insert into answer values (23,6,'Answer 3',0);
+insert into answer values (24,6,'Answer 4',0);
+
+insert into answer values (25,7,'Answer 1',0);
+insert into answer values (26,7,'Answer 2',0);
+insert into answer values (27,7,'Answer 3',1);
+insert into answer values (28,7,'Answer 4',0);
+
+insert into answer values (29,8,'Answer 1',0);
+insert into answer values (30,8,'Answer 2',0);
+insert into answer values (31,8,'Answer 3',0);
+insert into answer values (32,8,'Answer 4',1);
+
+insert into quiz_result values (1,1,1,2);
+insert into quiz_result values (1,2,5,2);
+insert into quiz_result values (1,3,9,2);
+insert into quiz_result values (1,4,13,2);

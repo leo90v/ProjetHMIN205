@@ -13,6 +13,8 @@ import umontpellier.hmin205.jansenmoros.POJO.Content;
 import umontpellier.hmin205.jansenmoros.POJO.Course;
 import umontpellier.hmin205.jansenmoros.POJO.MonthProgress;
 import umontpellier.hmin205.jansenmoros.POJO.Parent;
+import umontpellier.hmin205.jansenmoros.POJO.Question;
+import umontpellier.hmin205.jansenmoros.POJO.QuizResponse;
 import umontpellier.hmin205.jansenmoros.POJO.User;
 
 public interface INodeJS {
@@ -37,8 +39,14 @@ public interface INodeJS {
     @GET("pdf/list/{code}/{user}")
     Observable<List<Content>> getPdfList(@Path("code") int code, @Path("user") int user);
 
-    @GET("video/list/{code}")
-    Observable<List<Content>> getVideoList(@Path("code") int code);
+    @GET("video/list/{code}/{user}")
+    Observable<List<Content>> getVideoList(@Path("code") int code, @Path("user") int user);
+
+    @GET("quiz/list/{code}/{user}")
+    Observable<List<Content>> getQuizList(@Path("code") int code, @Path("user") int user);
+
+    @GET("quiz/{code}/{user}")
+    Observable<List<Question>> getQuiz(@Path("code") int code, @Path("user") int user);
 
     @GET("video/count/{year}/{user}")
     Observable<List<MonthProgress>> getVideoViews(@Path("year") int year, @Path("user") int user);
@@ -51,4 +59,7 @@ public interface INodeJS {
 
     @GET("video/set/{id_video}/{user}")
     Observable<String> setVideoViews(@Path("id_video") int id_video, @Path("user") int user);
+
+    @POST("quiz/answer")
+    Observable<String> saveQuizAnswer(@Body QuizResponse qr);
 }

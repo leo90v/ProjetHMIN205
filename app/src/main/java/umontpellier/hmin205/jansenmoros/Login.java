@@ -20,7 +20,6 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.INodeJS;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
-import umontpellier.hmin205.jansenmoros.POJO.Content;
 import umontpellier.hmin205.jansenmoros.POJO.User;
 
 public class Login extends AppCompatActivity {
@@ -60,6 +59,10 @@ public class Login extends AppCompatActivity {
         password = (MaterialEditText) findViewById(R.id.password);
         btnSignup = (MaterialButton) findViewById(R.id.signUp_button);
         btnDemo = (MaterialButton) findViewById(R.id.demo_button);
+
+        //Quick Login
+        email.setText("john@gmail.com");
+        password.setText("123456");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

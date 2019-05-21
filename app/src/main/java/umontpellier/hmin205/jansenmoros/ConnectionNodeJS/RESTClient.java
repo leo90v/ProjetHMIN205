@@ -3,7 +3,6 @@ package umontpellier.hmin205.jansenmoros.ConnectionNodeJS;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 import umontpellier.hmin205.jansenmoros.Properties;
 
 public class RESTClient {

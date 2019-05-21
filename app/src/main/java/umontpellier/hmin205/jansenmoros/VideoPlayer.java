@@ -11,21 +11,36 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
-import static java.security.AccessController.getContext;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.INodeJS;
+import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
 
 public class VideoPlayer extends AppCompatActivity {
 
     private AppCompatActivity activity;
     private VideoView vidView;
 
+    INodeJS myAPI;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     public static final String VIDEO_URL = "video_url";
+    public static final String VIDEO_ID = "video_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
 
+        Retrofit retrofit = RESTClient.getInstance();
+        myAPI = retrofit.create(INodeJS.class);
+
         activity = this;
+
+        final int id_video = getIntent().getIntExtra(VIDEO_ID,0);
 
         vidView = (VideoView)findViewById(R.id.myVideo);
         String vidAddress = getIntent().getStringExtra(VIDEO_URL);
@@ -47,7 +62,19 @@ public class VideoPlayer extends AppCompatActivity {
         vidView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                activity.finish();
+                if (id_video > 0) {
+                    compositeDisposable.add(myAPI.setVideoViews(id_video, Properties.getInstance().getUserId())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<String>() {
+                                @Override
+                                public void accept(String contents) throws Exception {
+                                    activity.finish();
+                                }
+                            }));
+                }
+                else
+                    activity.finish();
             }
         });
 
@@ -84,5 +111,17 @@ public class VideoPlayer extends AppCompatActivity {
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onStop() {
+        compositeDisposable.clear();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        compositeDisposable.clear();
+        super.onDestroy();
     }
 }
