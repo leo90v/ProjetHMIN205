@@ -15,6 +15,7 @@ import umontpellier.hmin205.jansenmoros.POJO.MonthProgress;
 import umontpellier.hmin205.jansenmoros.POJO.Parent;
 import umontpellier.hmin205.jansenmoros.POJO.Question;
 import umontpellier.hmin205.jansenmoros.POJO.QuizResponse;
+import umontpellier.hmin205.jansenmoros.POJO.Result;
 import umontpellier.hmin205.jansenmoros.POJO.User;
 
 public interface INodeJS {
@@ -62,4 +63,7 @@ public interface INodeJS {
 
     @POST("quiz/answer")
     Observable<String> saveQuizAnswer(@Body QuizResponse qr);
+
+    @GET("grades/{code}/{user}")
+    Observable<List<Result>> getGrades(@Path("code") int code, @Path("user") int user);
 }
