@@ -49,4 +49,6 @@ dependencies {
 
     //MPAndroidChart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 }

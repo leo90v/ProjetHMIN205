@@ -234,6 +234,11 @@ insert into answer values (14,4,'Answer 2',0);
 insert into answer values (15,4,'Answer 3',0);
 insert into answer values (16,4,'Answer 4',1);
 
+insert into quiz_result values (1,1,1,2);
+insert into quiz_result values (1,2,5,2);
+insert into quiz_result values (1,3,9,2);
+insert into quiz_result values (1,4,13,2);
+
 insert into quiz values (2,'Quiz 2',3);
 
 insert into question values (5,2,'Question 1');
@@ -261,7 +266,35 @@ insert into answer values (30,8,'Answer 2',0);
 insert into answer values (31,8,'Answer 3',0);
 insert into answer values (32,8,'Answer 4',1);
 
-insert into quiz_result values (1,1,1,2);
-insert into quiz_result values (1,2,5,2);
-insert into quiz_result values (1,3,9,2);
-insert into quiz_result values (1,4,13,2);
+
+insert into quiz values (3,'Quiz 1',2);
+
+insert into question values (9,3,'Question 1');
+insert into question values (10,3,'Question 2');
+insert into question values (11,3,'Question 3');
+insert into question values (12,3,'Question 4');
+
+insert into answer values (33,9,'Answer 1',1);
+insert into answer values (34,9,'Answer 2',0);
+insert into answer values (35,9,'Answer 3',0);
+insert into answer values (36,9,'Answer 4',0);
+
+insert into answer values (37,10,'Answer 1',0);
+insert into answer values (38,10,'Answer 2',1);
+insert into answer values (39,10,'Answer 3',0);
+insert into answer values (40,10,'Answer 4',0);
+
+insert into answer values (41,11,'Answer 1',0);
+insert into answer values (42,11,'Answer 2',0);
+insert into answer values (43,11,'Answer 3',1);
+insert into answer values (44,11,'Answer 4',0);
+
+insert into answer values (45,12,'Answer 1',0);
+insert into answer values (46,12,'Answer 2',0);
+insert into answer values (47,12,'Answer 3',0);
+insert into answer values (48,12,'Answer 4',1);
+
+insert into quiz_result values (3,9,33,2);
+insert into quiz_result values (3,10,38,2);
+insert into quiz_result values (3,11,42,2);
+insert into quiz_result values (3,12,45,2);

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".StudentMenu">
+
+    <TextView
+        android:id="@+id/textViewStudent"
+        android:layout_marginTop="65dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/btn_grades"
+        android:layout_marginTop="65dp"
+        android:layout_width="227dp"
+        android:layout_height="117dp"
+        android:layout_below="@id/textViewStudent"
+        android:layout_centerHorizontal="true"
+        android:text="@string/grades_button" />
+
+    <Button
+        android:id="@+id/btn_progress"
+        android:layout_width="227dp"
+        android:layout_height="117dp"
+        android:layout_below="@id/btn_grades"
+        android:layout_centerHorizontal="true"
+        android:text="@string/welcome_progression" />
+
+    <Button
+        android:id="@+id/btn_completedcontent"
+        android:layout_width="227dp"
+        android:layout_height="117dp"
+        android:layout_below="@+id/btn_progress"
+        android:layout_centerHorizontal="true"
+        android:text="@string/completedcontent_button" />
+
+</RelativeLayout>

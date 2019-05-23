@@ -56,4 +56,7 @@
     <string name="quizzes_button">Quizzes</string>
     <string name="grades_button">Grades</string>
     <string name="qcm_check_button">check</string>
+    <string name="completedcontent_button">Completed Content</string>
+    <string name="title_activity_student_list">StudentList</string>
+    <string name="title_activity_student_menu">StudentMenu</string>
 </resources>
