@@ -51,7 +51,9 @@ public class StudentMenu extends Activity {
         btnContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(StudentMenu.this, CompletedContent.class);
+                intent.putExtra(CompletedContent.USER_ID, student_id);
+                startActivity(intent);
             }
         });
     }

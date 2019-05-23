@@ -10,6 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import umontpellier.hmin205.jansenmoros.POJO.AllGrades;
+import umontpellier.hmin205.jansenmoros.POJO.Completed;
 import umontpellier.hmin205.jansenmoros.POJO.Content;
 import umontpellier.hmin205.jansenmoros.POJO.Course;
 import umontpellier.hmin205.jansenmoros.POJO.MonthProgress;
@@ -73,4 +74,10 @@ public interface INodeJS {
 
     @GET("student/list/{user}")
     Observable<List<User>> getStudents(@Path("user") int user);
+
+    @GET("video/completed/{user}")
+    Observable<List<Completed>> getCompletedVideos(@Path("user") int user);
+
+    @GET("pdf/completed/{user}")
+    Observable<List<Completed>> getCompletedPdfs(@Path("user") int user);
 }

@@ -13,8 +13,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".CompletedContent"
+            android:label="@string/title_activity_completed_content"></activity>
+        <activity
             android:name=".StudentMenu"
-            android:label="@string/title_activity_student_menu"></activity>
+            android:label="@string/title_activity_student_menu" />
         <activity
             android:name=".StudentList"
             android:label="@string/title_activity_student_list" />

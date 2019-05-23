@@ -59,4 +59,5 @@
     <string name="completedcontent_button">Completed Content</string>
     <string name="title_activity_student_list">StudentList</string>
     <string name="title_activity_student_menu">StudentMenu</string>
+    <string name="title_activity_completed_content">CompletedContent</string>
 </resources>
