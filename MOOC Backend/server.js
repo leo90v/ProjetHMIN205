@@ -248,6 +248,8 @@ app.post('/login/', (req, res, next) => {
   var user_password = post_data.password;
   var email = post_data.email;
 
+  //update user set last_login = now() where id=1;
+
   con.query('SELECT * FROM user WHERE email=?', [email], function(error, result, fields) {
     con.on('error', function(err) {
       console.log('[MySQL ERROR]', err);
@@ -259,7 +261,15 @@ app.post('/login/', (req, res, next) => {
       var encrypted_password = result[0].password;
       var hashed_password = checkHashPassword(user_password,salt).passwordHash;
       if (encrypted_password == hashed_password)
-        res.end(JSON.stringify(result[0]));
+      {
+        con.query('update user set last_login = now() where email=?;', [email], function(error, result2, fields) {
+          con.on('error', function(err) {
+            console.log('[MySQL ERROR]', err);
+            res.end(JSON.stringify({id:-1,message:'SQL Error'}));
+          })
+          res.end(JSON.stringify(result[0]));
+        })
+      }
       else
         res.end(JSON.stringify({id:-1,message:'Wrong user or password'}));
     }
@@ -491,6 +501,46 @@ app.get('/pdf/list/:course/:user', function(req, res) {
 })
 
 //Get pdf views
+app.get('/pdf/completed/:user', function(req, res) {
+  let user = req.params.user
+
+  con.query(`select c.id, c.name cname, p.name pname, v.completion_time
+             from pdf p, pdfviews v, course c
+             where p.id = v.id_pdf
+             and c.id = p.id_course
+             and v.id_user = ?
+             order by c.id, v.completion_time;`, [user], function(error, result, fields) {
+
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      let course = {id : result[0].id, name : result[0].cname };
+      let views = new Array();
+      let final_result = new Array();
+
+      for (i = 0; i < result.length; i++) {
+        if (course.id != result[i].id) {
+          course['views'] = views;
+          final_result.push(course);
+          course = {id : result[i].id, name : result[i].cname }
+          views = new Array();
+        }
+        views.push({"name":result[i].pname,"completion_time":result[i].completion_time.toLocaleString('en-GB', { timeZone: 'Europe/Paris' })})
+      }
+      course['views'] = views;
+      final_result.push(course);
+      res.end(JSON.stringify(final_result))
+    }
+    else {
+      res.end(JSON.stringify([{"id":0}]));
+    }
+  })
+})
+
+//Get pdf views count
 app.get('/pdf/count/:year/:user', function(req, res) {
   let year = req.params.year
   let user = req.params.user
@@ -516,6 +566,47 @@ app.get('/pdf/count/:year/:user', function(req, res) {
 })
 
 //Get video views
+app.get('/video/completed/:user', function(req, res) {
+  let user = req.params.user
+
+  con.query(`select c.id, c.name cname, p.name pname, v.completion_time
+             from pdf p, videoviews v, course c
+             where p.id = v.id_video
+             and c.id = p.id_course
+             and v.id_user = ?
+             order by c.id, v.completion_time;`, [user], function(error, result, fields) {
+
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      let course = {id : result[0].id, name : result[0].cname };
+      let views = new Array();
+      let final_result = new Array();
+
+      for (i = 0; i < result.length; i++) {
+        if (course.id != result[i].id) {
+          course['views'] = views;
+          final_result.push(course);
+          course = {id : result[i].id, name : result[i].cname }
+          views = new Array();
+        }
+
+        views.push({"name":result[i].pname,"completion_time":result[i].completion_time.toLocaleString('en-GB', { timeZone: 'Europe/Paris' })})
+      }
+      course['views'] = views;
+      final_result.push(course);
+      res.end(JSON.stringify(final_result))
+    }
+    else {
+      res.end(JSON.stringify([{"id":0}]));
+    }
+  })
+})
+
+//Get video views count
 app.get('/video/count/:year/:user', function(req, res) {
   let year = req.params.year
   let user = req.params.user
@@ -714,6 +805,143 @@ app.post('/quiz/answer', (req, res, next) => {
       });
     });
   });
+});
+
+app.get('/grades/:course/:user', function(req, res) {
+  let course = req.params.course
+  let user = req.params.user
+
+  con.query(`select qr.id_quiz, q.name, a.correct, count(qr.id_question) count from
+             quiz_result qr, answer a, quiz q
+             where qr.id_answer = a.id and q.id = qr.id_quiz
+             and q.id_course = ? and qr.id_user = ?
+             group by qr.id_quiz, q.name, a.correct
+             order by id_quiz, a.correct`,
+  [course, user], function(error, result, fields) {
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      let grades = new Array();
+      for (i = 0; i < result.length; i++) {
+        let qr = {id_quiz : result[i].id_quiz, name : result[i].name}
+        let gr = new Array();
+
+        if (i == result.length - 1) {
+          gr.push({correct : result[i].correct, count : result[i].count});
+        }
+        else {
+          if (result[i].id_quiz == result[i+1].id_quiz) {
+            gr.push({correct : result[i].correct, count : result[i].count});
+            i++;
+            gr.push({correct : result[i].correct, count : result[i].count});
+          }
+          else {
+            gr.push({correct : result[i].correct, count : result[i].count});
+          }
+        }
+
+        qr['grades'] = gr;
+        grades.push(qr);
+      }
+      res.end(JSON.stringify(grades))
+    }
+    else {
+      res.end(JSON.stringify([{"id_quiz":0,"name":"No grades for this course"}]));
+    }
+  })
+});
+
+//Get Student List
+app.get('/student/list/:user', function(req, res) {
+  let user = req.params.user
+
+  con.query(`select s.* from user p, user s
+             where s.id_parent = p.id
+             and p.id = ?;`,
+  [user], function(error, result, fields) {
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      result.forEach (function (u) {
+        var localDate = new Date(u.last_login);
+        u.last_login = localDate.toLocaleString('en-GB', { timeZone: 'Europe/Paris' });
+      });
+
+      res.end(JSON.stringify(result))
+    }
+    else {
+      res.end(JSON.stringify([{"id":0}]));
+    }
+  })
+})
+
+//Get Grades Student
+app.get('/allgrades/:user', function(req, res) {
+  let user = req.params.user
+
+  con.query(`select q.id_course, c.name course_name, qr.id_quiz, q.name quiz_name, a.correct, count(qr.id_question) count from
+             quiz_result qr, answer a, quiz q, course c
+             where qr.id_answer = a.id and q.id = qr.id_quiz
+             and qr.id_user = ?
+             and c.id = q.id_course
+             group by c.id, c.name, qr.id_quiz, q.name, a.correct
+             order by c.id, id_quiz, a.correct;`,
+  [user], function(error, result, fields) {
+    con.on('error', function(err) {
+      console.log('[MySQL ERROR]', err);
+      res.json('Error: ', err);
+    })
+
+    if (result && result.length) {
+      final_result = new Array();
+      course = new Object();
+      r = new Array();
+      let qr = null;
+
+      course['course_name'] = result[0].course_name;
+      for (i = 0; i < result.length; i++) {
+        if (course['course_name'] != result[i].course_name) {
+          course['results'] = r;
+          final_result.push(course);
+          course = new Object();
+          r = new Array();
+          course['course_name'] = result[i].course_name;
+        }
+
+        qr = {id_quiz : result[i].id_quiz, name : result[i].quiz_name}
+        let gr = new Array();
+
+        if (i == result.length - 1) {
+          gr.push({correct : result[i].correct, count : result[i].count});
+        }
+        else {
+          if (result[i].id_quiz == result[i+1].id_quiz) {
+            gr.push({correct : result[i].correct, count : result[i].count});
+            i++;
+            gr.push({correct : result[i].correct, count : result[i].count});
+          }
+          else {
+            gr.push({correct : result[i].correct, count : result[i].count});
+          }
+        }
+
+        qr['grades'] = gr;
+        r.push(qr);
+      }
+      course['results'] = r;
+      final_result.push(course);
+      res.end(JSON.stringify(final_result))
+    }
+    else {
+      res.end(JSON.stringify([{"course_name":""}]));
+    }
+  })
 })
 
 //Send email

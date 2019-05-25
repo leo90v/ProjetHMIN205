@@ -18,7 +18,7 @@ public class WelcomePage extends AppCompatActivity {
     INodeJS myAPI;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    Button btnCourses, btnProgression, btnProfile;
+    Button btnCourses, btnProgression, btnProfile, btnStudents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class WelcomePage extends AppCompatActivity {
         btnCourses = findViewById(R.id.btn_courses);
         btnProgression = findViewById(R.id.btn_progression);
         btnProfile = findViewById(R.id.btn_profile);
+        btnStudents = findViewById(R.id.btn_students);
 
         btnCourses.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +62,22 @@ public class WelcomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnStudents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WelcomePage.this, StudentList.class);
+                startActivity(intent);
+            }
+        });
+
+        if (Properties.getInstance().getUserType() == 1) {
+            btnStudents.setVisibility(View.GONE);
+        }
+        else {
+            btnCourses.setVisibility(View.GONE);
+            btnProgression.setVisibility(View.GONE);
+        }
     }
 
     @Override

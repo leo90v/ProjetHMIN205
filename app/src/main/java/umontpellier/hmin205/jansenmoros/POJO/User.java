@@ -38,6 +38,9 @@ public class User {
     @SerializedName("id_parent")
     @Expose
     private Integer idParent;
+    @SerializedName("last_login")
+    @Expose
+    private String lastLogin;
 
     public Integer getId() {
         return id;
@@ -125,6 +128,14 @@ public class User {
 
     public void setGrade(Integer grade) {
         this.grade = grade;
+    }
+
+    public String getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
 }

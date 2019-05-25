@@ -80,9 +80,7 @@ public class CompletedContent extends Activity {
                                         TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                                         TextView text2 = (TextView) view.findViewById(android.R.id.text2);
                                         text1.setText(subject.getViews().get(position).getName());
-                                        String fullTime = subject.getViews().get(position).getCompletionTime();
-                                        String formattedTime = fullTime.substring(0,10) + " " + fullTime.substring(11,19);
-                                        text2.setText(formattedTime);
+                                        text2.setText(subject.getViews().get(position).getCompletionTime());
                                         return view;
                                     }
                                 };
@@ -128,9 +126,7 @@ public class CompletedContent extends Activity {
                                         TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                                         TextView text2 = (TextView) view.findViewById(android.R.id.text2);
                                         text1.setText(subject.getViews().get(position).getName());
-                                        String fullTime = subject.getViews().get(position).getCompletionTime();
-                                        String formattedTime = fullTime.substring(0,10) + " " + fullTime.substring(11,19);
-                                        text2.setText(formattedTime);
+                                        text2.setText(subject.getViews().get(position).getCompletionTime());
                                         return view;
                                     }
                                 };

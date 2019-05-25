@@ -28,6 +28,7 @@
     <string name="welcome_courses">Courses</string>
     <string name="welcome_progression">Progression</string>
     <string name="welcome_welcome">Welcome</string>
+    <string name="welcome_students">Students</string>
     <string-array name="currentYear_array">
         <item>Grade 1</item>
         <item>Grade 2</item>

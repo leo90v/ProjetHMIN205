@@ -88,11 +88,8 @@ public class Login extends AppCompatActivity {
         btnDemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Properties.getInstance().setLogin(true, "demo@gmail.com",1,0, 3);
+                Properties.getInstance().setLogin(true, "demo@gmail.com",1,0, 3);
                 Intent intent = new Intent(Login.this, CourseListPage.class);
-                startActivity(intent);*/
-                Properties.getInstance().setLogin(true, "jane@gmail.com", 2, 0, 1);
-                Intent intent = new Intent(Login.this, StudentList.class);
                 startActivity(intent);
             }
         });

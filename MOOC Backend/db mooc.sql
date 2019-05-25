@@ -24,6 +24,7 @@ create table user(
     grade integer DEFAULT 0,
 	active integer DEFAULT 0,
     id_parent integer DEFAULT 0,
+    last_login DATETIME DEFAULT CURRENT_TIMESTAMP,
 	primary key(id)
 );
 
@@ -114,8 +115,8 @@ create table quiz_result(
 );
 
 #COURSES INSERTS
-insert into user values (1,'Jane','Doe','jane@gmail.com','02ca39431c68cc2edf6d1068fa73d6225307caf5155b2df293505de8894559d9e0669db982dae673f30e79ef63a16180e93d86ecf578ae3edc13e3d7e33a7a89','22ca24db59b3f5b8',2,0,1,0);
-insert into user values (2,'John','Doe','john@gmail.com','02ca39431c68cc2edf6d1068fa73d6225307caf5155b2df293505de8894559d9e0669db982dae673f30e79ef63a16180e93d86ecf578ae3edc13e3d7e33a7a89','22ca24db59b3f5b8',1,4,1,1);
+insert into user (name, last_name, email, password, salt, user_type, grade, active, id_parent) values ('Jane','Doe','jane@gmail.com','02ca39431c68cc2edf6d1068fa73d6225307caf5155b2df293505de8894559d9e0669db982dae673f30e79ef63a16180e93d86ecf578ae3edc13e3d7e33a7a89','22ca24db59b3f5b8',2,0,1,0);
+insert into user (name, last_name, email, password, salt, user_type, grade, active, id_parent) values ('John','Doe','john@gmail.com','02ca39431c68cc2edf6d1068fa73d6225307caf5155b2df293505de8894559d9e0669db982dae673f30e79ef63a16180e93d86ecf578ae3edc13e3d7e33a7a89','22ca24db59b3f5b8',1,4,1,1);
 
 insert into course values (1, 4, 'Introduction to computer science and programming','This subject is aimed at students with little or no programming experience. It aims to provide students with an understanding of the role computation can play in solving problems. It also aims to help students, regardless of their major, to feel justifiably confident of their ability to write small programs that allow them to accomplish useful goals. The class will use the Python programming language.');
 insert into course values (2, 4, 'Introduction to computational thinking and data science','6.0002 is the continuation of 6.0001 Introduction to Computer Science and Programming in Python and is intended for students with little or no programming experience. It aims to provide students with an understanding of the role computation can play in solving problems and to help students, regardless of their major, feel justifiably confident of their ability to write small programs that allow them to accomplish useful goals. The class uses the Python 3.5 programming language.');
@@ -173,7 +174,7 @@ insert into videoviews (id_video,id_user,completion_time) values (8,2,'2019-08-0
 #insert into videoviews (id_video,id_user,completion_time) values (11,2,'2019-11-01 00:00:00');
 
 #DEMO INSERTS
-insert into user values (0,'Demo','Demo','demo@gmail.com','demo','demo',1,0,1,0);
+insert into user (name, last_name, email, password, salt, user_type, grade, active, id_parent) values ('Demo','Demo','demo@gmail.com','demo','demo',1,0,1,0);
 
 insert into course values (4, 0, 'Introduction to computer science and programming','This subject is aimed at students with little or no programming experience. It aims to provide students with an understanding of the role computation can play in solving problems. It also aims to help students, regardless of their major, to feel justifiably confident of their ability to write small programs that allow them to accomplish useful goals. The class will use the Python programming language.');
 insert into course values (5, 0, 'Introduction to computational thinking and data science','6.0002 is the continuation of 6.0001 Introduction to Computer Science and Programming in Python and is intended for students with little or no programming experience. It aims to provide students with an understanding of the role computation can play in solving problems and to help students, regardless of their major, feel justifiably confident of their ability to write small programs that allow them to accomplish useful goals. The class uses the Python 3.5 programming language.');

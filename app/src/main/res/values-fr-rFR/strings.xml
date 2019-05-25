@@ -29,6 +29,7 @@
     <string name="welcome_courses">Cours</string>
     <string name="welcome_progression">Progression</string>
     <string name="welcome_welcome">Bienvenu</string>
+    <string name="welcome_students">Elèves</string>
     <string-array name="currentYear_array">
         <item>CP</item>
         <item>CE1</item>

@@ -29,6 +29,14 @@
         android:text="@string/welcome_courses" />
 
     <Button
+        android:id="@+id/btn_students"
+        android:layout_width="227dp"
+        android:layout_height="117dp"
+        android:layout_below="@id/btn_profile"
+        android:layout_centerHorizontal="true"
+        android:text="@string/welcome_students" />
+
+    <Button
         android:id="@+id/btn_progression"
         android:layout_width="227dp"
         android:layout_height="117dp"
