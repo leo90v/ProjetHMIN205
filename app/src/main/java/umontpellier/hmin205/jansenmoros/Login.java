@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,7 +34,7 @@ public class Login extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     MaterialEditText email, password;
-    MaterialButton btnLogin, btnSignup, btnDemo;
+    Button btnLogin, btnSignup, btnDemo;
 
     Dialog myDialog;
 
@@ -60,11 +62,11 @@ public class Login extends AppCompatActivity {
 
         myDialog = new Dialog(this);
 
-        btnLogin = (MaterialButton) findViewById(R.id.login_button);
+        btnLogin = (Button) findViewById(R.id.login_button);
         email = (MaterialEditText) findViewById(R.id.email);
         password = (MaterialEditText) findViewById(R.id.password);
-        btnSignup = (MaterialButton) findViewById(R.id.signUp_button);
-        btnDemo = (MaterialButton) findViewById(R.id.demo_button);
+        btnSignup = (Button) findViewById(R.id.signUp_button);
+        btnDemo = (Button) findViewById(R.id.demo_button);
 
         //Quick Login
         email.setText("john@gmail.com");
@@ -97,7 +99,7 @@ public class Login extends AppCompatActivity {
 
     private void loginUser(final String mail, String pass, final View v) {
         // TODO : Uncomment to use the server
-        compositeDisposable.add(myAPI.loginUser(mail,pass)
+       /* compositeDisposable.add(myAPI.loginUser(mail,pass)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<User>() {
@@ -120,12 +122,12 @@ public class Login extends AppCompatActivity {
                         else
                             Toast.makeText(Login.this, user.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                }));
+                }));*/
         // TODO : Comment to use the server
         // Change the mail to the username
-        /*Properties.getInstance().setLogin(true, mail,2,4, 0);
+        Properties.getInstance().setLogin(true, mail,1,4, 0);
         Intent intent = new Intent(Login.this, WelcomePage.class);
-        startActivity(intent);*/
+        startActivity(intent);
     }
 
     public void ShowPopup(View v, final String email) {

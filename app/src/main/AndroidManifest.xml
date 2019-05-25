@@ -31,10 +31,11 @@
         <activity
             android:name=".VideoPlayer"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".Login">
+        <activity
+            android:name=".Login"
+            android:theme="@style/noTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
