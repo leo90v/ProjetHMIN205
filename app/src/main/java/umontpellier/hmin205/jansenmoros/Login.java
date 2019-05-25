@@ -1,6 +1,8 @@
 package umontpellier.hmin205.jansenmoros;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.util.Calendar;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -20,7 +24,6 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.INodeJS;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
-import umontpellier.hmin205.jansenmoros.POJO.User;
 
 public class Login extends AppCompatActivity {
 
@@ -48,6 +51,8 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        setAlarm();
 
         Retrofit retrofit = RESTClient.getInstance();
         myAPI = retrofit.create(INodeJS.class);
@@ -93,7 +98,7 @@ public class Login extends AppCompatActivity {
 
     private void loginUser(final String mail, String pass, final View v) {
         // TODO : Uncomment to use the server
-        compositeDisposable.add(myAPI.loginUser(mail,pass)
+        /*compositeDisposable.add(myAPI.loginUser(mail,pass)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<User>() {
@@ -116,12 +121,12 @@ public class Login extends AppCompatActivity {
                         else
                             Toast.makeText(Login.this, user.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                }));
+                }));*/
         // TODO : Comment to use the server
         // Change the mail to the username
-        /*Properties.getInstance().setLogin(true, mail,1,4);
+        Properties.getInstance().setLogin(true, mail,2,4, 0);
         Intent intent = new Intent(Login.this, WelcomePage.class);
-        startActivity(intent);*/
+        startActivity(intent);
     }
 
     public void ShowPopup(View v, final String email) {
@@ -162,4 +167,16 @@ public class Login extends AppCompatActivity {
         });
         myDialog.show();
     }
+
+    public void setAlarm(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,7);
+        calendar.set(Calendar.MINUTE,38);
+        Intent intent = new Intent(getApplicationContext(), NotificationReciever.class);
+        intent.setAction("MY_NOTIFICATION_MESSAGE");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),alarmManager.INTERVAL_DAY,pendingIntent);
+    }
+
 }
