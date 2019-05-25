@@ -55,8 +55,6 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        setAlarm();
-
         Retrofit retrofit = RESTClient.getInstance();
         myAPI = retrofit.create(INodeJS.class);
 
@@ -167,17 +165,6 @@ public class Login extends AppCompatActivity {
             }
         });
         myDialog.show();
-    }
-
-    public void setAlarm(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY,7);
-        calendar.set(Calendar.MINUTE,38);
-        Intent intent = new Intent(getApplicationContext(), NotificationReciever.class);
-        intent.setAction("MY_NOTIFICATION_MESSAGE");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),alarmManager.INTERVAL_DAY,pendingIntent);
     }
 
 }

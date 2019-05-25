@@ -1,5 +1,7 @@
 package umontpellier.hmin205.jansenmoros;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -10,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Calendar;
 
 import io.reactivex.disposables.CompositeDisposable;
 import retrofit2.Retrofit;
@@ -27,6 +31,8 @@ public class WelcomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcomepage);
+
+        if(Properties.getInstance().getUserType()==1) setAlarm(7,12);
 
         Retrofit retrofit = RESTClient.getInstance();
         myAPI = retrofit.create(INodeJS.class);
@@ -122,5 +128,16 @@ public class WelcomePage extends AppCompatActivity {
     protected void onDestroy() {
         compositeDisposable.clear();
         super.onDestroy();
+    }
+
+    public void setAlarm(int h, int min){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,h);
+        calendar.set(Calendar.MINUTE,min);
+        Intent intent = new Intent(getApplicationContext(), NotificationReciever.class);
+        intent.setAction("MY_NOTIFICATION_MESSAGE");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),alarmManager.INTERVAL_DAY,pendingIntent);
     }
 }
