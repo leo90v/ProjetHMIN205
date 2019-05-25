@@ -60,4 +60,12 @@
     <string name="title_activity_student_list">StudentList</string>
     <string name="title_activity_student_menu">StudentMenu</string>
     <string name="title_activity_completed_content">CompletedContent</string>
+    <string name="grade_profile">Grade:</string>
+    <string name="type_profile">Account type:</string>
+    <string name="parent_type_profile">Parent</string>
+    <string name="student_type_profile">Student</string>
+    <string name="camera_dialog_profile">Take a picture</string>
+    <string name="gallery_dialog_profile">Choose from gallery</string>
+    <string name="cancel_dialog_profile">Cancel</string>
+    <string name="title_dialog_profile">Edit your profile picture</string>
 </resources>
