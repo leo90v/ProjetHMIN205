@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="login_button">Connexion</string>
+    <string name="signup_button">S\'inscrire</string>
+    <string name="demo_button">Demo</string>
+    <string name="email">Mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="signup_child_button">Elève</string>
+    <string name="signup_parent_button">Parent</string>
+    <string name="signup_question">Choisir le type de compte</string>
+    <string name="signupform_hintName">Prenom</string>
+    <string name="signupform_hintSurname">Nom</string>
+    <string name="signupform_hintEmail">Adresse mail</string>
+    <string name="signupform_hintPassword">Mot de passe</string>
+    <string name="signupform_hintConfirmPassword">Confirmer le mot de passe</string>
+    <string name="signupform_hintLink">Lien</string>
+    <string name="signupform_btnSubmit">Entrer</string>
+    <string name="signupform_btnAddLink">Ajouter un élève</string>
+    <string name="signupform_btnRemoveLink">Enlever un élève</string>
+    <string name="signupform_tvCY">Niveau</string>
+    <string name="signupform_tvCourses">Cours</string>
+    <string name="signupform_tvMode">Mode</string>
+    <string name="signupform_invalidSignup">Champs invalide!</string>
+    <string name="popup_confCode">Code de confirmation</string>
+    <string name="popup_btn_confCode">Activer</string>
+    <string name="popup_message">Entrez le code d\'activation</string>
+    <string name="welcome_profile">Profile</string>
+    <string name="welcome_courses">Cours</string>
+    <string name="welcome_progression">Progression</string>
+    <string name="welcome_welcome">Bienvenu</string>
+    <string-array name="currentYear_array">
+        <item>CP</item>
+        <item>CE1</item>
+        <item>CE2</item>
+        <item>CM1</item>
+        <item>CM2</item>
+        <item>6ème</item>
+        <item>5ème</item>
+        <item>4ème</item>
+        <item>3ème</item>
+        <item>Seconde</item>
+        <item>Première</item>
+        <item>Terminale</item>
+    </string-array>
+    <string-array name="nbCourses_array">
+        <item>Un</item>
+        <item>Deux</item>
+        <item>Tous</item>
+    </string-array>
+    <string-array name="mode_array">
+        <item>Progression</item>
+        <item>Accompanied</item>
+    </string-array>
+    <string name="videos_button">Vidéos</string>
+    <string name="documents_button">Documents</string>
+    <string name="quizzes_button">Quizzes</string>
+    <string name="grades_button">Notes</string>
+    <string name="qcm_check_button">verifier</string>
+    <string name="completedcontent_button">Cours finis</string>
+    <string name="title_activity_student_list">StudentList</string>
+    <string name="title_activity_student_menu">StudentMenu</string>
+    <string name="title_activity_completed_content">CompletedContent</string>
+    <string name="grade_profile">Niveau :</string>
+    <string name="type_profile">Type de compte :</string>
+    <string name="parent_type_profile">Parent</string>
+    <string name="student_type_profile">Elève</string>
+    <string name="camera_dialog_profile">Camèra</string>
+    <string name="gallery_dialog_profile">Gallerie</string>
+    <string name="cancel_dialog_profile">Annuler</string>
+    <string name="title_dialog_profile">Editez votre photo du profile</string>
+</resources>
