@@ -31,7 +31,8 @@ public class CompletedContent extends Activity {
     INodeJS myAPI;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    LinearLayout videosLayout, documentsLayout;
+    LinearLayout ccLayout;
+    TextView tvVideoView, tvPdfView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,9 @@ public class CompletedContent extends Activity {
         myAPI = retrofit.create(INodeJS.class);
 
         user_id = getIntent().getIntExtra(USER_ID,0);
-        videosLayout = findViewById(R.id.videosLayout);
-        documentsLayout = findViewById(R.id.documentsLayout);
+        ccLayout = findViewById(R.id.ccLayout);
+        tvVideoView = findViewById(R.id.tvVideoView);
+        tvPdfView = findViewById(R.id.tvPdfView);
 
         compositeDisposable.add(myAPI.getCompletedVideos(user_id)
                 .subscribeOn(Schedulers.io())
@@ -52,13 +54,21 @@ public class CompletedContent extends Activity {
                     @Override
                     public void accept(List<Completed> cc) throws Exception {
 
+                        int index = ccLayout.indexOfChild(tvVideoView)+1;
                         for (final Completed subject : cc) {
                             TextView tv = new TextView(CompletedContent.this);
                             tv.setText(subject.getName());
                             tv.setTextAppearance(android.R.style.TextAppearance_Medium);
+
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            params.topMargin = 40;
+                            params.gravity = Gravity.CENTER_HORIZONTAL;
+                            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                            tv.setLayoutParams(params);
                             tv.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                            videosLayout.addView(tv);
+                            ccLayout.addView(tv,index);
+                            index = ccLayout.indexOfChild(tv)+1;
 
                             ListView lv = new ListView(CompletedContent.this);
 
@@ -70,12 +80,64 @@ public class CompletedContent extends Activity {
                                         TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                                         TextView text2 = (TextView) view.findViewById(android.R.id.text2);
                                         text1.setText(subject.getViews().get(position).getName());
-                                        text2.setText(subject.getViews().get(position).getCompletionTime());
+                                        String fullTime = subject.getViews().get(position).getCompletionTime();
+                                        String formattedTime = fullTime.substring(0,10) + " " + fullTime.substring(11,19);
+                                        text2.setText(formattedTime);
                                         return view;
                                     }
                                 };
                                 lv.setAdapter(listAdapter);
-                                videosLayout.addView(lv);
+                                ccLayout.addView(lv,index);
+                                setListViewHeightBasedOnChildren(lv);
+                                index = ccLayout.indexOfChild(lv)+1;
+                            }
+                        }
+                    }
+                }));
+
+        compositeDisposable.add(myAPI.getCompletedPdfs(user_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<Completed>>() {
+                    @Override
+                    public void accept(List<Completed> cc) throws Exception {
+
+                        int index = ccLayout.indexOfChild(tvPdfView)+1;
+                        for (final Completed subject : cc) {
+                            TextView tv = new TextView(CompletedContent.this);
+                            tv.setText(subject.getName());
+                            tv.setTextAppearance(android.R.style.TextAppearance_Medium);
+
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            params.topMargin = 40;
+                            params.gravity = Gravity.CENTER_HORIZONTAL;
+                            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                            tv.setLayoutParams(params);
+                            tv.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                            ccLayout.addView(tv,index);
+                            index = ccLayout.indexOfChild(tv)+1;
+
+                            ListView lv = new ListView(CompletedContent.this);
+
+                            if (subject.getViews() != null) {
+                                ListAdapter listAdapter = new ArrayAdapter(CompletedContent.this, android.R.layout.simple_list_item_2, android.R.id.text1, subject.getViews()) {
+                                    @Override
+                                    public View getView(int position, View convertView, ViewGroup parent) {
+                                        View view = super.getView(position, convertView, parent);
+                                        TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                                        TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+                                        text1.setText(subject.getViews().get(position).getName());
+                                        String fullTime = subject.getViews().get(position).getCompletionTime();
+                                        String formattedTime = fullTime.substring(0,10) + " " + fullTime.substring(11,19);
+                                        text2.setText(formattedTime);
+                                        return view;
+                                    }
+                                };
+                                lv.setAdapter(listAdapter);
+                                ccLayout.addView(lv,index);
+                                setListViewHeightBasedOnChildren(lv);
+                                index = ccLayout.indexOfChild(lv)+1;
                             }
                         }
                     }
@@ -92,6 +154,27 @@ public class CompletedContent extends Activity {
     protected void onDestroy() {
         compositeDisposable.clear();
         super.onDestroy();
+    }
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
 }
