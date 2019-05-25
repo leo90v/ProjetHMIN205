@@ -123,7 +123,7 @@ public class Login extends AppCompatActivity {
                 }));*/
         // TODO : Comment to use the server
         // Change the mail to the username
-        Properties.getInstance().setLogin(true, mail,1,4, 0);
+        Properties.getInstance().setLogin(true, mail,2,4, 0);
         Intent intent = new Intent(Login.this, WelcomePage.class);
         startActivity(intent);
     }

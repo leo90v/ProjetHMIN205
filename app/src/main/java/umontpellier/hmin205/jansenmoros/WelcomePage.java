@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.RenderProcessGoneDetail;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -89,9 +90,21 @@ public class WelcomePage extends AppCompatActivity {
         }
     }
 
+    // TODO : on peut eventuellement enlever le if pour les vues qui sont accessible a partir d'un seul type d'utilisateur
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.navigation_menu, menu);
+        if(Properties.getInstance().getUserType()==1){
+            MenuItem item = menu.findItem(R.id.students_nav);
+            item.setVisible(false);
+        }
+        else{
+            MenuItem item = menu.findItem(R.id.courses_nav);
+            item.setVisible(false);
+            MenuItem item2 = menu.findItem(R.id.progression_nav);
+            item2.setVisible(false);
+        }
+
         return true;
 
     }
@@ -110,6 +123,10 @@ public class WelcomePage extends AppCompatActivity {
                 Intent intent = new Intent(this, ProgressionCurve.class);
                 intent.putExtra(ProgressionCurve.STUDENT_ID, Properties.getInstance().getUserId());
                 startActivity(intent);
+                return true;
+
+            case R.id.students_nav:
+                startActivity(new Intent(this, StudentList.class));
                 return true;
 
             default:

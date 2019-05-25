@@ -214,15 +214,27 @@ public class Profile extends AppCompatActivity implements LocationListener{
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.navigation_menu, menu);
+
+        if(Properties.getInstance().getUserType()==1){
+            MenuItem item = menu.findItem(R.id.students_nav);
+            item.setVisible(false);
+        }
+        else{
+            MenuItem item = menu.findItem(R.id.courses_nav);
+            item.setVisible(false);
+            MenuItem item2 = menu.findItem(R.id.progression_nav);
+            item2.setVisible(false);
+        }
+
+        MenuItem item3 = menu.findItem(R.id.progression_nav);
+        item3.setVisible(false);
+
         return true;
 
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.profile_nav:
-                startActivity(new Intent(this, Profile.class));
-                return true;
 
             case R.id.courses_nav:
                 startActivity(new Intent(this, CourseListPage.class));
@@ -232,6 +244,10 @@ public class Profile extends AppCompatActivity implements LocationListener{
                 Intent intent = new Intent(this, ProgressionCurve.class);
                 intent.putExtra(ProgressionCurve.STUDENT_ID, Properties.getInstance().getUserId());
                 startActivity(intent);
+                return true;
+
+            case R.id.students_nav:
+                startActivity(new Intent(this, StudentList.class));
                 return true;
 
             default:

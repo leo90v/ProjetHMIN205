@@ -87,11 +87,4 @@ public class StudentList extends Activity {
         compositeDisposable.clear();
         super.onDestroy();
     }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.navigation_menu, menu);
-        return true;
-
-    }
 }
