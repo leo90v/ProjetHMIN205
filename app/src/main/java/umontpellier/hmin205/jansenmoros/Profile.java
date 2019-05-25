@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,12 +52,45 @@ public class Profile extends AppCompatActivity implements LocationListener{
         this.btnEditPicture = (ImageButton) findViewById(R.id.editButton);
 
         this.tvName.setText(Properties.getInstance().getUsername());
-        this.tvYear.setText(getResources().getString(R.string.grade_profile) + " " + Properties.getInstance().getGrade());
         int type = Properties.getInstance().getUserType();
         String typeText;
         if(type==1) typeText = getResources().getString(R.string.student_type_profile);
         else typeText = getResources().getString(R.string.parent_type_profile);
         this.tvType.setText(getResources().getString(R.string.type_profile) + " " + typeText);
+
+        // TODO : Add the all the children
+        if(type==2){
+           final RelativeLayout layout = (RelativeLayout) findViewById(R.id.layoutProfile);
+
+            for(int i=0; i<4; i++){  // TODO : for each child
+               final TextView textView = new TextView(this);
+               textView.setText("Child "+i);
+               textView.setTextSize(14);
+
+               int curTextViewId = i + 1;
+               textView.setId(curTextViewId);
+
+               final RelativeLayout.LayoutParams params =
+                       new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                               RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+                if(i!=0){
+                    params.addRule(RelativeLayout.BELOW, i);
+                }
+                else{
+                    params.addRule(RelativeLayout.BELOW, R.id.locationProfile);
+                }
+
+                params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+                params.setMargins(0,20,0,0);
+                textView.setLayoutParams(params);
+
+               layout.addView(textView, params);
+           }
+        }
+        else{
+            this.tvYear.setText(getResources().getString(R.string.grade_profile) + " " + Properties.getInstance().getGrade());
+        }
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
