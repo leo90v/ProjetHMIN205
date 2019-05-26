@@ -40,7 +40,6 @@ import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.INodeJS;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
 import umontpellier.hmin205.jansenmoros.POJO.User;
 
-// TODO : Set the location permission in the emulator in order to see the location
 
 public class Profile extends AppCompatActivity implements LocationListener{
 
@@ -76,7 +75,6 @@ public class Profile extends AppCompatActivity implements LocationListener{
         else typeText = getResources().getString(R.string.parent_type_profile);
         this.tvType.setText(getResources().getString(R.string.type_profile) + " " + typeText);
 
-        // TODO : Add the all the children
         if(type==2){
            final RelativeLayout layout = (RelativeLayout) findViewById(R.id.layoutProfile);
 

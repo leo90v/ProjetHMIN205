@@ -87,8 +87,7 @@ public class WelcomePage extends AppCompatActivity {
             btnProgression.setVisibility(View.GONE);
         }
     }
-
-    // TODO : on peut eventuellement enlever le if pour les vues qui sont accessible a partir d'un seul type d'utilisateur
+    
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.navigation_menu, menu);

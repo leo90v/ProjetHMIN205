@@ -74,7 +74,6 @@ public class PdfReader extends AppCompatActivity {
                 }
             }
             catch (Exception e) {
-                //TODO
                 return null;
             }
             return inputStream;

@@ -89,7 +89,6 @@ public class Login extends AppCompatActivity {
     }
 
     private void loginUser(final String mail, String pass, final View v) {
-        // TODO : Uncomment to use the server
         compositeDisposable.add(myAPI.loginUser(mail,pass)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -114,11 +113,6 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this, user.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }));
-        // TODO : Comment to use the server
-        // Change the mail to the username
-        /*Properties.getInstance().setLogin(true, mail,1,4, 0);
-        Intent intent = new Intent(Login.this, WelcomePage.class);
-        startActivity(intent);*/
     }
 
     public void ShowPopup(View v, final String email) {

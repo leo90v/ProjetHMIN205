@@ -202,7 +202,6 @@ public class SignupForm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Parent signup
-                //TODO Finish validations
                 if (accountType == 2) {
                     //Recover all data and build POJO object for REST Endpoint
                     Parent parent = new Parent();
@@ -226,7 +225,6 @@ public class SignupForm extends AppCompatActivity {
 
                     signupParent(parent);
                 } else { //Student signup
-                    //TODO Finish validations
                     if (isEmail && isName && isSurname) {
                         //Save user in DB
                         signupUser(etEmail.getText().toString(), etPassword.getText().toString(), etName.getText().toString(), etSurname.getText().toString(), accountType, spCurrentYear.getSelectedItemPosition()+1);
