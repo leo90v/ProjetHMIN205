@@ -117,7 +117,8 @@ public class Profile extends AppCompatActivity implements LocationListener{
                     }));
         }
         else{
-            this.tvYear.setText(getResources().getString(R.string.grade_profile) + " " + Properties.getInstance().getGrade());
+            String gradeArray[] = getResources().getStringArray(R.array.currentYear_array);
+            this.tvYear.setText(getResources().getString(R.string.grade_profile) + " " + gradeArray[Properties.getInstance().getGrade()-1]);
         }
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

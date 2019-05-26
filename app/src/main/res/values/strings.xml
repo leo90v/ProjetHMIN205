@@ -30,18 +30,18 @@
     <string name="welcome_welcome">Welcome</string>
     <string name="welcome_students">Students</string>
     <string-array name="currentYear_array">
-        <item>Grade 1</item>
-        <item>Grade 2</item>
-        <item>Grade 3</item>
-        <item>Grade 4</item>
-        <item>Grade 5</item>
-        <item>Grade 6</item>
-        <item>Grade 7</item>
-        <item>Grade 8</item>
-        <item>Grade 9</item>
-        <item>Grade 10</item>
-        <item>Grade 11</item>
-        <item>Grade 12</item>
+        <item>First</item>
+        <item>Second</item>
+        <item>Third</item>
+        <item>Fourth</item>
+        <item>Fifth</item>
+        <item>Sixth</item>
+        <item>Seventh</item>
+        <item>Eight</item>
+        <item>Ninth</item>
+        <item>Tenth</item>
+        <item>Eleventh</item>
+        <item>Twelfth</item>
     </string-array>
     <string-array name="nbCourses_array">
         <item>One</item>
