@@ -60,8 +60,8 @@ public class Login extends AppCompatActivity {
         btnDemo = (Button) findViewById(R.id.demo_button);
 
         //Quick Login
-        email.setText("john@gmail.com");
-        password.setText("123456");
+        //email.setText("john@gmail.com");
+        //password.setText("123456");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -70,4 +70,5 @@
     <string name="gallery_dialog_profile">Gallerie</string>
     <string name="cancel_dialog_profile">Annuler</string>
     <string name="title_dialog_profile">Editez votre photo du profile</string>
+    <string name="logout">Se déconnecter</string>
 </resources>

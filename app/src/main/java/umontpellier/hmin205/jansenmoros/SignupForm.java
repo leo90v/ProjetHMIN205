@@ -123,7 +123,7 @@ public class SignupForm extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // Remove the last child
-                    if (!childViewList.isEmpty()) {
+                    if (childViewList.size() > 1) {
                         layout.removeView(childViewList.get(childViewList.size() - 1));
                         childViewList.remove(childViewList.size() - 1);
                     }
@@ -232,8 +232,8 @@ public class SignupForm extends AppCompatActivity {
                         signupUser(etEmail.getText().toString(), etPassword.getText().toString(), etName.getText().toString(), etSurname.getText().toString(), accountType, spCurrentYear.getSelectedItemPosition()+1);
 
                         // Go back to the login page
-                        Intent intent = new Intent(SignupForm.this, Login.class);
-                        startActivity(intent);
+                        //Intent intent = new Intent(SignupForm.this, Login.class);
+                        //startActivity(intent);
                     } else {
                         Context context = getApplicationContext();
                         CharSequence text = getString(R.string.signupform_invalidSignup);
@@ -291,7 +291,12 @@ public class SignupForm extends AppCompatActivity {
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        Toast.makeText(SignupForm.this, s, Toast.LENGTH_LONG).show();
+                        if (s.contains("Signup succesful!")) {
+                            Intent intent = new Intent(SignupForm.this, Login.class);
+                            startActivity(intent);
+                        }
+                        else
+                            Toast.makeText(SignupForm.this, s, Toast.LENGTH_LONG).show();
                     }
                 }));
     }
@@ -303,9 +308,12 @@ public class SignupForm extends AppCompatActivity {
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        Toast.makeText(SignupForm.this, s, Toast.LENGTH_LONG).show();
-                        if (s.contains("Signup succesful!"))
-                            finish();
+                        if (s.contains("Signup succesful!")) {
+                            Intent intent = new Intent(SignupForm.this, Login.class);
+                            startActivity(intent);
+                        }
+                        else
+                            Toast.makeText(SignupForm.this, s, Toast.LENGTH_LONG).show();
                     }
                 }));
     }

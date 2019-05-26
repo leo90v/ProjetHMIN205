@@ -215,6 +215,12 @@ public class CompletedContent extends AppCompatActivity {
                 startActivity(new Intent(this, StudentList.class));
                 return true;
 
+            case R.id.logout_nav:
+                Intent intent2 = new Intent(this, Login.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent2);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
 

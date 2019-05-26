@@ -98,7 +98,7 @@ public class Grades extends AppCompatActivity {
                             for (final AllGrades subject : g) {
                                 TextView tv = new TextView(Grades.this);
                                 tv.setText(subject.getCourseName());
-                                tv.setTextAppearance(android.R.style.TextAppearance_Large);
+                                tv.setTextAppearance(android.R.style.TextAppearance_Medium);
 
                                 tv.setGravity(Gravity.CENTER_HORIZONTAL);
 
@@ -179,6 +179,12 @@ public class Grades extends AppCompatActivity {
 
             case R.id.students_nav:
                 startActivity(new Intent(this, StudentList.class));
+                return true;
+
+            case R.id.logout_nav:
+                Intent intent2 = new Intent(this, Login.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent2);
                 return true;
 
             default:
