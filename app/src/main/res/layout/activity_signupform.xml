@@ -7,9 +7,15 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/signUpLinearLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signupform_hintSurname"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/surname"
@@ -17,39 +23,74 @@
             android:layout_height="wrap_content"
             android:hint="@string/signupform_hintSurname"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signupform_hintName"
+            android:layout_marginTop="10dp"/>
+
         <EditText
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/signupform_hintName"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signupform_hintEmail"
+            android:layout_marginTop="10dp"/>
+
         <EditText
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/signupform_hintEmail"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signupform_hintPassword"
+            android:layout_marginTop="10dp"/>
+
         <EditText
             android:id="@+id/password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/signupform_hintPassword"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signupform_hintConfirmPassword"
+            android:layout_marginTop="10dp"/>
+
         <EditText
             android:id="@+id/confirmPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/signupform_hintConfirmPassword"/>
 
-        <Button
-            android:id="@+id/btn_addLink"
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:text="@string/signupform_btnAddLink" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
 
-        <Button
-            android:id="@+id/btn_removeLink"
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:text="@string/signupform_btnRemoveLink" />
+            <Button
+                android:id="@+id/btn_addLink"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:text="@string/signupform_btnAddLink" />
+
+            <Button
+                android:id="@+id/btn_removeLink"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:text="@string/signupform_btnRemoveLink"
+                android:layout_marginStart="10dp"
+                android:layout_toRightOf="@+id/btn_addLink"/>
+
+        </RelativeLayout>
 
 
         <LinearLayout

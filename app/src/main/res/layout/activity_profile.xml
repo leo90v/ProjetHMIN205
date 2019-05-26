@@ -24,7 +24,7 @@
         android:layout_below="@+id/nameProfile"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         android:src="@drawable/person" />
 
     <TextView
@@ -58,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/pictureProfile"
         android:layout_alignBottom="@+id/pictureProfile"
+        android:background="@null"
         android:src="@android:drawable/ic_menu_edit" />
 
 </RelativeLayout>
