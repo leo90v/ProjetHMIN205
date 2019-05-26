@@ -2,7 +2,6 @@ package umontpellier.hmin205.jansenmoros;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
@@ -25,7 +24,6 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.INodeJS;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
-import umontpellier.hmin205.jansenmoros.POJO.AllGrades;
 import umontpellier.hmin205.jansenmoros.POJO.Completed;
 
 public class CompletedContent extends AppCompatActivity {

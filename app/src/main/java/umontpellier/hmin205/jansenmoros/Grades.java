@@ -1,10 +1,8 @@
 package umontpellier.hmin205.jansenmoros;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ContentFrameLayout;
-import android.text.Layout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,11 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.resources.TextAppearance;
 
 import java.util.List;
 
@@ -30,7 +24,6 @@ import retrofit2.Retrofit;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.INodeJS;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
 import umontpellier.hmin205.jansenmoros.POJO.AllGrades;
-import umontpellier.hmin205.jansenmoros.POJO.Grade;
 import umontpellier.hmin205.jansenmoros.POJO.Result;
 
 public class Grades extends AppCompatActivity {

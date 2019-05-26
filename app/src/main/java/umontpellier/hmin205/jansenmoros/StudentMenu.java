@@ -2,7 +2,6 @@ package umontpellier.hmin205.jansenmoros;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
