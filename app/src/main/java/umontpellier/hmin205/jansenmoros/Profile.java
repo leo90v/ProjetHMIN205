@@ -31,6 +31,15 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.INodeJS;
+import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
+import umontpellier.hmin205.jansenmoros.POJO.User;
+
 // TODO : Set the location permission in the emulator in order to see the location
 
 public class Profile extends AppCompatActivity implements LocationListener{
@@ -42,10 +51,16 @@ public class Profile extends AppCompatActivity implements LocationListener{
     ImageView profilePicture;
     ImageButton btnEditPicture;
 
+    INodeJS myAPI;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        Retrofit retrofit = RESTClient.getInstance();
+        myAPI = retrofit.create(INodeJS.class);
 
         this.tvName = (TextView) findViewById(R.id.nameProfile);
         this.tvYear = (TextView) findViewById(R.id.gradeProfile);
@@ -65,31 +80,41 @@ public class Profile extends AppCompatActivity implements LocationListener{
         if(type==2){
            final RelativeLayout layout = (RelativeLayout) findViewById(R.id.layoutProfile);
 
-            for(int i=0; i<4; i++){  // TODO : for each child
-               final TextView textView = new TextView(this);
-               textView.setText("Child "+i);
-               textView.setTextSize(14);
+            compositeDisposable.add(myAPI.getStudents(Properties.getInstance().getUserId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<List<User>>() {
+                        @Override
+                        public void accept(final List<User> results) throws Exception {
+                            int i = 0;
+                            for (User child : results) {
+                                final TextView textView = new TextView(Profile.this);
+                                textView.setText(child.getName() + " " + child.getLastName());
+                                textView.setTextSize(14);
 
-               int curTextViewId = i + 1;
-               textView.setId(curTextViewId);
+                                int curTextViewId = i + 1;
+                                textView.setId(curTextViewId);
 
-               final RelativeLayout.LayoutParams params =
-                       new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                               RelativeLayout.LayoutParams.WRAP_CONTENT);
+                                final RelativeLayout.LayoutParams params =
+                                        new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                                RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-                if(i!=0){
-                    params.addRule(RelativeLayout.BELOW, i);
-                }
-                else{
-                    params.addRule(RelativeLayout.BELOW, R.id.locationProfile);
-                }
+                                if(i!=0){
+                                    params.addRule(RelativeLayout.BELOW, i);
+                                }
+                                else{
+                                    params.addRule(RelativeLayout.BELOW, R.id.locationProfile);
+                                }
 
-                params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-                params.setMargins(0,20,0,0);
-                textView.setLayoutParams(params);
+                                params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+                                params.setMargins(0,20,0,0);
+                                textView.setLayoutParams(params);
 
-               layout.addView(textView, params);
-           }
+                                layout.addView(textView, params);
+                                i++;
+                            }
+                        }
+                    }));
         }
         else{
             this.tvYear.setText(getResources().getString(R.string.grade_profile) + " " + Properties.getInstance().getGrade());
@@ -140,6 +165,18 @@ public class Profile extends AppCompatActivity implements LocationListener{
         } catch (NullPointerException e) {
             // Handle NullPointerException
         }
+    }
+
+    @Override
+    protected void onStop() {
+        compositeDisposable.clear();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        compositeDisposable.clear();
+        super.onDestroy();
     }
 
     @Override
