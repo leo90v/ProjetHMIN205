@@ -30,6 +30,7 @@ public class Grades extends AppCompatActivity {
 
     public static final String USER_ID = "user_id";
     public static final String COURSE_ID = "course_id";
+    public static final String COURSE_NAME = "course_name";
 
     int user_id, course_id;
     INodeJS myAPI;
@@ -72,6 +73,13 @@ public class Grades extends AppCompatActivity {
                                     return view;
                                 }
                             };
+
+                            //Add title
+                            TextView tv = findViewById(R.id.tvCourseName);
+                            String courseName = getIntent().getStringExtra(COURSE_NAME);
+                            tv.setText(courseName);
+                            tv.setTextAppearance(android.R.style.TextAppearance_Large);
+
                             mainListView.setAdapter(listAdapter);
                         }
                     }));

@@ -51,13 +51,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/signupform_hintPassword"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp" />
 
         <EditText
             android:id="@+id/password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/signupform_hintPassword"/>
+            android:hint="@string/signupform_hintPassword"
+            android:inputType="textPassword"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +70,8 @@
             android:id="@+id/confirmPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/signupform_hintConfirmPassword"/>
+            android:hint="@string/signupform_hintConfirmPassword"
+            android:inputType="textPassword"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"

@@ -115,6 +115,7 @@ public class CourseListPage extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(CourseListPage.this, Grades.class);
                     intent.putExtra(Grades.COURSE_ID, course.getId());
+                    intent.putExtra(Grades.COURSE_NAME, course.getName());
                     intent.putExtra(Grades.USER_ID, Properties.getInstance().getUserId());
                     startActivity(intent);
                 }
