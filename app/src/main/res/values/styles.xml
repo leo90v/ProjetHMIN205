@@ -10,7 +10,7 @@
         <item name="windowNoTitle">false</item>
         <item name ="android:fontFamily">@font/font_quicksand</item>
         <item name="materialButtonStyle">@style/button</item>
-        <item name="android:windowBackground">@drawable/bgc</item>
+        <item name="android:windowBackground">@drawable/dark_unif</item>
         <item name="editTextBackground">@null</item>
         <item name="android:textViewStyle">@style/textviewStyle</item>
         <item name="actionBarPopupTheme">@style/Theme.MaterialComponents.Light</item>
