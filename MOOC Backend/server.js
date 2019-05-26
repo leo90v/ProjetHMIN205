@@ -441,9 +441,9 @@ app.get('/video/list/:course/:user', function(req, res) {
   con.query(`select video.*, not isnull(videoviews.id) viewed
              from video left outer join videoviews
              on video.id = videoviews.id_video
-             where video.id_course=?
-             and (videoviews.id_user=? or isnull(videoviews.id_user))`,
-  [course, user], function(error, result, fields) {
+             and (videoviews.id_user in (?,null))
+             where video.id_course=?`,
+  [user,course], function(error, result, fields) {
     con.on('error', function(err) {
       console.log('[MySQL ERROR]', err);
       res.json('Error: ', err);
@@ -483,9 +483,9 @@ app.get('/pdf/list/:course/:user', function(req, res) {
   con.query(`select pdf.*, not isnull(pdfviews.id) viewed
              from pdf left outer join pdfviews
              on pdf.id = pdfviews.id_pdf
-             where pdf.id_course=?
-             and (pdfviews.id_user=? or isnull(pdfviews.id_user))`,
-  [course, user], function(error, result, fields) {
+             and (pdfviews.id_user in (?,null))
+             where pdf.id_course=?`,
+  [user,course], function(error, result, fields) {
     con.on('error', function(err) {
       console.log('[MySQL ERROR]', err);
       res.json('Error: ', err);
@@ -535,7 +535,7 @@ app.get('/pdf/completed/:user', function(req, res) {
       res.end(JSON.stringify(final_result))
     }
     else {
-      res.end(JSON.stringify([{"id":0}]));
+      res.end(JSON.stringify([{"id":0, name:"The student has not completed any documents yet."}]));
     }
   })
 })
@@ -601,7 +601,7 @@ app.get('/video/completed/:user', function(req, res) {
       res.end(JSON.stringify(final_result))
     }
     else {
-      res.end(JSON.stringify([{"id":0}]));
+      res.end(JSON.stringify([{"id":0,name:"The student has not completed any videos yet."}]));
     }
   })
 })
@@ -748,9 +748,10 @@ app.get('/quiz/list/:course/:user', function(req, res) {
              from quiz q
              left outer join quiz_result qr
              on qr.id_quiz = q.id
-             where q.id_course = ? and (qr.id_user = ? or isnull(qr.id_user))
+             and (qr.id_user = ?)
+             where q.id_course = ?
              order by q.id;`,
-  [course, user], function(error, result, fields) {
+  [user,course], function(error, result, fields) {
     con.on('error', function(err) {
       console.log('[MySQL ERROR]', err);
       res.json('Error: ', err);
@@ -939,7 +940,7 @@ app.get('/allgrades/:user', function(req, res) {
       res.end(JSON.stringify(final_result))
     }
     else {
-      res.end(JSON.stringify([{"course_name":""}]));
+      res.end(JSON.stringify([{"course_name":"The student has not taken any quizzes yet."}]));
     }
   })
 })
