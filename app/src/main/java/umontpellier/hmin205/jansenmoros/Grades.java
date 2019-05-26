@@ -144,6 +144,7 @@ public class Grades extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.navigation_menu, menu);
+
         if(Properties.getInstance().getUserType()==1){
             MenuItem item = menu.findItem(R.id.students_nav);
             item.setVisible(false);

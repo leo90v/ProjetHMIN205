@@ -226,9 +226,6 @@ public class Profile extends AppCompatActivity implements LocationListener{
             item2.setVisible(false);
         }
 
-        MenuItem item3 = menu.findItem(R.id.progression_nav);
-        item3.setVisible(false);
-
         return true;
 
     }

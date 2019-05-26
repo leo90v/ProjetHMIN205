@@ -14,15 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".CompletedContent"
-            android:label="@string/title_activity_completed_content"></activity>
-        <activity
-            android:name=".StudentMenu"
-            android:label="@string/title_activity_student_menu" />
-        <activity
-            android:name=".StudentList"
-            android:label="@string/title_activity_student_list" />
+        <activity android:name=".CompletedContent" />
+        <activity android:name=".StudentMenu" />
+        <activity android:name=".StudentList" />
         <activity android:name=".Grades" />
         <activity android:name=".ProgressionCurve" />
         <activity android:name=".ContentList" />

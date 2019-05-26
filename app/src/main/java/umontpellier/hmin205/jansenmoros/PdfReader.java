@@ -101,6 +101,18 @@ public class PdfReader extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.navigation_menu, menu);
+
+        if(Properties.getInstance().getUserType()==1){
+            MenuItem item = menu.findItem(R.id.students_nav);
+            item.setVisible(false);
+        }
+        else{
+            MenuItem item = menu.findItem(R.id.courses_nav);
+            item.setVisible(false);
+            MenuItem item2 = menu.findItem(R.id.progression_nav);
+            item2.setVisible(false);
+        }
+
         return true;
 
     }

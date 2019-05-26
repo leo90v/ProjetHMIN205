@@ -125,6 +125,7 @@ public class CourseListPage extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.navigation_menu, menu);
+
         if(Properties.getInstance().getUserType()==1){
             MenuItem item = menu.findItem(R.id.students_nav);
             item.setVisible(false);
@@ -136,8 +137,8 @@ public class CourseListPage extends AppCompatActivity {
             item2.setVisible(false);
         }
 
-        MenuItem item3 = menu.findItem(R.id.courses_nav);
-        item3.setVisible(false);
+        if (Properties.getInstance().getUserId() == 3)
+            return false;
 
         return true;
 
