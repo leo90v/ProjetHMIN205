@@ -150,6 +150,10 @@ public class CourseListPage extends AppCompatActivity {
                 startActivity(new Intent(this, Profile.class));
                 return true;
 
+            case R.id.courses_nav:
+                startActivity(new Intent(this, CourseListPage.class));
+                return true;
+
             case R.id.progression_nav:
                 Intent intent = new Intent(this, ProgressionCurve.class);
                 intent.putExtra(ProgressionCurve.STUDENT_ID, Properties.getInstance().getUserId());

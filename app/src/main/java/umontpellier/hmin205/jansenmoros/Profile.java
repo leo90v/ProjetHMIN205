@@ -232,6 +232,9 @@ public class Profile extends AppCompatActivity implements LocationListener{
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.profile_nav:
+                startActivity(new Intent(this, Profile.class));
+                return true;
 
             case R.id.courses_nav:
                 startActivity(new Intent(this, CourseListPage.class));

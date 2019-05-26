@@ -3,6 +3,7 @@ package umontpellier.hmin205.jansenmoros;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,7 +28,7 @@ import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
 import umontpellier.hmin205.jansenmoros.POJO.AllGrades;
 import umontpellier.hmin205.jansenmoros.POJO.Completed;
 
-public class CompletedContent extends Activity {
+public class CompletedContent extends AppCompatActivity {
 
     public static final String USER_ID = "user_id";
     private int user_id;
@@ -180,6 +181,7 @@ public class CompletedContent extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.navigation_menu, menu);
+
         if(Properties.getInstance().getUserType()==1){
             MenuItem item = menu.findItem(R.id.students_nav);
             item.setVisible(false);

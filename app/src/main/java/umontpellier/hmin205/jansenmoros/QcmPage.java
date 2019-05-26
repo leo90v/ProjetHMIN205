@@ -226,6 +226,10 @@ public class QcmPage extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
+            case R.id.students_nav:
+                startActivity(new Intent(this, StudentList.class));
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
 

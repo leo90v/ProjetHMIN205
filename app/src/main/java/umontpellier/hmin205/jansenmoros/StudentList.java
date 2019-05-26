@@ -3,6 +3,7 @@ package umontpellier.hmin205.jansenmoros;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +26,7 @@ import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.INodeJS;
 import umontpellier.hmin205.jansenmoros.ConnectionNodeJS.RESTClient;
 import umontpellier.hmin205.jansenmoros.POJO.User;
 
-public class StudentList extends Activity {
+public class StudentList extends AppCompatActivity {
 
     INodeJS myAPI;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
